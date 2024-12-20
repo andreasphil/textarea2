@@ -1,0 +1,44 @@
+{
+  "name": "@andreasphil/textarea2",
+  "version": "0.0.0",
+  "description": "A better plain-text input component",
+  "author": "Andreas Philippi",
+  "license": "MIT",
+  "type": "module",
+  "repository": "https://github.com/andreasphil/textarea2",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/textarea2.js",
+      "types": "./dist/textarea2.d.ts"
+    },
+    "./plugins": {
+      "import": "./dist/plugins.js",
+      "types": "./dist/plugins/index.d.ts"
+    },
+    "./style.css": {
+      "import": "./dist/textarea2.css"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "pnpm build:bundle; pnpm build:types",
+    "build:types": "tsc -p tsconfig.lib.json",
+    "build:bundle": "vite build",
+    "preversion": "pnpm test && pnpm build; git add dist/"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.5.2",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.1",
+    "vitest": "^2.1.8"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

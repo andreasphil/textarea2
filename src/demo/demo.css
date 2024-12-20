@@ -1,0 +1,88 @@
+/* Reset ----------------------------------------------- */
+
+body {
+  font-family: ui-sans-serif, sans-serif;
+  font-size: 1.05em;
+  line-height: 1.5em;
+  margin: auto;
+  max-width: 70ch;
+  padding: 4rem 1rem;
+  > :first-child {
+    margin-top: 0;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 2em 0 1rem;
+}
+article,
+blockquote,
+header,
+footer,
+ol,
+ul,
+hr,
+p,
+pre {
+  margin: 1.5em 0;
+}
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/* Demo styles ----------------------------------------- */
+
+nav ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+label {
+  display: block;
+}
+
+/* Basic textarea styling ------------------------------ */
+
+textarea-2 {
+  border: 1px dashed black;
+  caret-color: blue;
+  padding: 0.75ch;
+}
+
+menu {
+  background-color: white;
+  border: 1px solid black;
+  flex-direction: column;
+  gap: 0.25rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5rem;
+
+  &:popover-open {
+    display: flex;
+  }
+
+  button {
+    background-color: white;
+    border: 1px solid black;
+    display: block;
+    font: inherit;
+    padding: 0.25rem 0.5rem;
+    width: 100%;
+
+    &[data-active="true"] {
+      background-color: lightskyblue;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Textarea2 Demo</title>
+  </head>
+
+  <link rel="stylesheet" href="./src/demo/demo.css" />
+
+  <body>
+    <div id="app">
+      <main>
+        <h1>Textarea2 Demo</h1>
+        <p>
+          A better plaintext input, implemented as a web component. Learn more
+          on <a href="https://github.com/andreasphil/textarea2">GitHub.</a>
+        </p>
+
+        <textarea-2 overscroll>
+          <textarea></textarea>
+        </textarea-2>
+
+        <p>Above is the textarea with all default plugins. Try:</p>
+
+        <ul>
+          <li>
+            Numbered lists and lists starting with <code>-</code> or
+            <code>*</code> should continue automatically.
+          </li>
+          <li>
+            Press <kbd>tab</kbd> or <kbd>shift+tab</kbd> to indent or outdent
+            the current line.
+          </li>
+          <li>
+            Press <kbd>option+arrow up</kbd> or <kbd>option+arrow down</kbd> to
+            flip two lines.
+          </li>
+          <li>
+            Cut when nothing is selected to cut the entire line. Also works for
+            copying.
+          </li>
+          <li>
+            Press <kbd>cmd+shift+d</kbd> when nothing is selected to duplicate
+            the entire line.
+          </li>
+          <li>
+            Press <kbd>cmd+shift+k</kbd> when nothing is selected to delete the
+            entire line.
+          </li>
+          <li>Type <kbd>/</kbd> for autocompletions.</li>
+        </ul>
+      </main>
+    </div>
+
+    <script type="module" src="./src/demo/demo.ts"></script>
+  </body>
+</html>
