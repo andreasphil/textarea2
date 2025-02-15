@@ -165,13 +165,13 @@ To achieve this, you can create the element used for rendering yourself, and add
 
 ## Development
 
-Textarea2 is a web component. It is built with [Vite](https://vitejs.dev). Packages are managed by [pnpm](https://pnpm.io). Tests are powered by [Vitest](https://vitest.dev). The following commands are available:
+Textarea2 is a web component. It is built with [Vite](https://vitejs.dev). Packages are managed by [npm](https://npmjs.org). Tests are powered by [Vitest](https://vitest.dev). The following commands are available:
 
 ```sh
-pnpm dev          # Start development server
-pnpm test         # Run tests once
-pnpm test:watch   # Run tests in watch mode
-pnpm build        # Bundle for production
+node --run dev          # Start development server
+node --run test         # Run tests once
+node --run test:watch   # Run tests in watch mode
+node --run build        # Bundle for production
 ```
 
 ## Credits

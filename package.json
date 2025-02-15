@@ -26,19 +26,18 @@
     "dev": "vite",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "pnpm build:bundle; pnpm build:types",
+    "build": "node --run build:bundle; node --run build:types",
     "build:types": "tsc -p tsconfig.lib.json",
     "build:bundle": "vite build",
-    "preversion": "pnpm test && pnpm build; git add dist/"
+    "preversion": "node --run test && node --run build; git add dist/"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/user-event": "^14.5.2",
-    "jsdom": "^25.0.1",
-    "typescript": "^5.7.2",
-    "vite": "^6.0.1",
-    "vitest": "^2.1.8"
-  },
-  "packageManager": "pnpm@9.15.0"
+    "@testing-library/user-event": "^14.6.1",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vitest": "^3.0.5"
+  }
 }
