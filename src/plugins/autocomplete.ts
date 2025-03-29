@@ -114,8 +114,14 @@ export class AutocompletePlugin implements T2Plugin {
 
     // No autocomplete context existing yet -> check if we need to create one
     if (!this.#activeAc) {
-      const mode = this.#completions.find((i) => i.trigger === event.key);
-      if (mode) this.#initAutocomplete(mode);
+      this.#t2?.act(({ selectionStart, selectionEnd, value }) => {
+        const cursor = selectionStart();
+        if (cursor !== selectionEnd()) return;
+        const char = value().slice(cursor - 1, cursor);
+
+        const mode = this.#completions.find((i) => i.trigger === char);
+        if (mode) this.#initAutocomplete(mode);
+      });
     }
 
     // Autocomplete was interrupted -> reset
