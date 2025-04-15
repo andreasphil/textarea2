@@ -113,7 +113,7 @@ export class AutocompletePlugin implements T2Plugin {
     ];
 
     // No autocomplete context existing yet -> check if we need to create one
-    if (!this.#activeAc) {
+    if (!this.#activeAc && !["ArrowUp", "ArrowDown"].includes(event.key)) {
       this.#t2?.act(({ selectionStart, selectionEnd, value }) => {
         const cursor = selectionStart();
         if (cursor !== selectionEnd()) return;
@@ -130,7 +130,7 @@ export class AutocompletePlugin implements T2Plugin {
     }
 
     // User is typing -> update current command
-    else if (this.#activeAc.mode) {
+    else if (this.#activeAc?.mode) {
       const cursor = this.#activeAc.start;
       const exp = new RegExp(`^\\${this.#activeAc.mode.trigger}(\\w*)`);
 
