@@ -19,7 +19,8 @@
       "types": "./dist/plugins/index.d.ts"
     },
     "./style.css": {
-      "import": "./dist/textarea2.css"
+      "import": "./dist/textarea2.css",
+      "default": "./dist/textarea2.css"
     }
   },
   "scripts": {
