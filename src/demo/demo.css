@@ -1,42 +1,33 @@
 /* Reset ----------------------------------------------- */
 
-body {
+:where(*, ::before, ::after) {
+  box-sizing: border-box;
+}
+:where(body) {
   font-family: ui-sans-serif, sans-serif;
   font-size: 1.05em;
   line-height: 1.5em;
   margin: auto;
   max-width: 70ch;
   padding: 4rem 1rem;
-  > :first-child {
-    margin-top: 0;
-  }
-  > :last-child {
-    margin-bottom: 0;
-  }
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+:where(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.2;
   margin: 2em 0 1rem;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
-article,
-blockquote,
-header,
-footer,
-ol,
-ul,
-hr,
-p,
-pre {
+:where(article, blockquote, header, footer, figure, ol, ul, hr, p, pre) {
   margin: 1.5em 0;
 }
-*,
-::before,
-::after {
-  box-sizing: border-box;
+:where(button, input, select, textarea) {
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+:where(img) {
+  display: block;
+  max-width: 100%;
 }
 
 /* Demo styles ----------------------------------------- */
