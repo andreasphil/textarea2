@@ -1,33 +1,15 @@
-var M = (h) => {
-  throw TypeError(h);
-};
-var y = (h, r, t) => r.has(h) || M("Cannot " + t);
-var i = (h, r, t) => (y(h, r, "read from private field"), t ? t.call(h) : r.get(h)), b = (h, r, t) => r.has(h) ? M("Cannot add the same private member more than once") : r instanceof WeakSet ? r.add(h) : r.set(h, t), u = (h, r, t, s) => (y(h, r, "write to private field"), s ? s.call(h, t) : r.set(h, t), t), l = (h, r, t) => (y(h, r, "access private method"), t);
-import { s as F, e as O, a as P, g as D } from "./text-DdwPLt1P.js";
-function I() {
-  return ({ value: h, out: r }) => {
-    const t = F(h), s = Array.from(r.children);
-    for (t.forEach((n, c) => {
-      let d;
-      c < s.length ? d = s[c] : (d = document.createElement("div"), r.appendChild(d)), d.textContent = n;
-    }); r.children.length > t.length && r.lastChild; )
-      r.removeChild(r.lastChild);
+import { s as l, e as a, a as c, g as u } from "./text-BeGDkh5s.js";
+function d() {
+  return ({ value: h, out: t }) => {
+    const e = l(h), s = Array.from(t.children);
+    for (e.forEach((i, n) => {
+      let r;
+      n < s.length ? r = s[n] : (r = document.createElement("div"), t.appendChild(r)), r.textContent = i;
+    }); t.children.length > e.length && t.lastChild; )
+      t.removeChild(t.lastChild);
   };
 }
-var a, f, E, m, S, e, C, R, p, A, L, w, H, g, v, T, V, o, k, j, q;
-class G extends HTMLElement {
-  // Lifecycle --------------------------------------------
-  constructor() {
-    super();
-    b(this, e);
-    // Internal state ---------------------------------------
-    b(this, a, null);
-    b(this, f, null);
-    b(this, E, /* @__PURE__ */ new Set());
-    b(this, m, "");
-    // Presentation -----------------------------------------
-    b(this, S, I());
-  }
+class f extends HTMLElement {
   // Static properties + configuration --------------------
   static define(t = "textarea-2") {
     customElements.define(t, this);
@@ -35,134 +17,150 @@ class G extends HTMLElement {
   static get observedAttributes() {
     return [];
   }
+  // Internal state ---------------------------------------
+  #t = null;
+  #s = null;
+  #r = /* @__PURE__ */ new Set();
+  #a = "";
+  // Lifecycle --------------------------------------------
+  constructor() {
+    super();
+  }
   connectedCallback() {
     const t = this.querySelector("textarea");
     if (!t) throw new Error("Could not find a textarea to use");
-    l(this, e, j).call(this, t), u(this, m, t.value), u(this, a, t);
-    const s = l(this, e, q).call(this);
-    u(this, f, s), this.addEventListener("click", () => l(this, e, A).call(this)), l(this, e, C).call(this, !0), i(this, E).forEach((n) => l(this, e, R).call(this, n));
+    this.#v(t), this.#a = t.value, this.#t = t;
+    const e = this.#m();
+    this.#s = e, this.addEventListener("click", () => this.#d()), this.#h(!0), this.#r.forEach((s) => this.#u(s));
   }
   disconnectedCallback() {
-    i(this, E).forEach((t) => l(this, e, p).call(this, t));
+    this.#r.forEach((t) => this.#g(t));
   }
   attributeChangedCallback() {
   }
+  // Presentation -----------------------------------------
+  #c = d();
   setRender(t) {
-    u(this, S, t()), l(this, e, C).call(this, !0);
+    this.#c = t(), this.#h(!0);
+  }
+  #h(t = !1) {
+    if (!this.#s || this.#s.getAttribute("custom") !== null) return;
+    let e = this.#a;
+    t && (this.#s.innerHTML = "", e = ""), this.#c({ value: this.#e, oldValue: e, out: this.#s });
   }
   // Plugins ----------------------------------------------
   use(...t) {
-    return t.forEach((s) => {
-      var n;
-      i(this, E).add(s), (n = s.setup) == null || n.call(s), this.isConnected && l(this, e, R).call(this, s);
+    return t.forEach((e) => {
+      this.#r.add(e), e.setup?.(), this.isConnected && this.#u(e);
     }), { use: this.use.bind(this) };
+  }
+  #u(t) {
+    t.connected({ t2: this, textarea: this.#t });
+  }
+  #g(t) {
+    t.disconnected?.();
   }
   // Public interface -------------------------------------
   async act(t) {
-    var d;
-    let s = !1;
-    const n = (x) => (typeof x == "string" && (u(this, e, x, k), s = !0), i(this, e, o)), c = {
-      focus: l(this, e, A).bind(this),
-      insertAt: l(this, e, w).bind(this),
-      select: l(this, e, L).bind(this),
-      selectedLines: () => i(this, e, V),
-      selectionEnd: () => i(this, e, v),
-      selectionStart: () => i(this, e, g),
-      type: l(this, e, H).bind(this),
-      value: n
+    let e = !1;
+    const s = (n) => (typeof n == "string" && (this.#e = n, e = !0), this.#e), i = {
+      focus: this.#d.bind(this),
+      insertAt: this.#o.bind(this),
+      select: this.#l.bind(this),
+      selectedLines: () => this.#E,
+      selectionEnd: () => this.#n,
+      selectionStart: () => this.#i,
+      type: this.#b.bind(this),
+      value: s
     };
-    await t(c), s && ((d = i(this, a)) == null || d.dispatchEvent(new Event("change", { bubbles: !0 })));
+    await t(i), e && this.#t?.dispatchEvent(new Event("change", { bubbles: !0 }));
   }
-}
-a = new WeakMap(), f = new WeakMap(), E = new WeakMap(), m = new WeakMap(), S = new WeakMap(), e = new WeakSet(), C = function(t = !1) {
-  if (!i(this, f) || i(this, f).getAttribute("custom") !== null) return;
-  let s = i(this, m);
-  t && (i(this, f).innerHTML = "", s = ""), i(this, S).call(this, { value: i(this, e, o), oldValue: s, out: i(this, f) });
-}, R = function(t) {
-  t.connected({ t2: this, textarea: i(this, a) });
-}, p = function(t) {
-  var s;
-  (s = t.disconnected) == null || s.call(t);
-}, // Internal utilities -----------------------------------
-A = function(t) {
-  var s;
-  (s = i(this, a)) == null || s.focus(), t && l(this, e, L).call(this, t);
-}, L = function(t) {
-  if (i(this, a)) {
-    if (t.to === "absolute")
-      i(this, a).setSelectionRange(t.start, t.end ?? t.start);
-    else if (t.to === "relative") {
-      const s = i(this, e, g) + t.delta, n = t.collapse ? s : i(this, e, v) + t.delta;
-      i(this, a).setSelectionRange(s, n);
-    } else if (t.to === "startOfLine") {
-      const [s] = O(
-        i(this, e, o),
-        t.startOf
-      );
-      i(this, a).setSelectionRange(s, s);
-    } else if (t.to === "endOfLine") {
-      const [, s] = O(i(this, e, o), t.endOf);
-      i(this, a).setSelectionRange(s, s);
-    } else if (t.to === "lines") {
-      const { start: s, end: n } = t, [c, d] = O(i(this, e, o), s, n);
-      i(this, a).setSelectionRange(c, d);
+  // Internal utilities -----------------------------------
+  #d(t) {
+    this.#t?.focus(), t && this.#l(t);
+  }
+  #l(t) {
+    if (this.#t) {
+      if (t.to === "absolute")
+        this.#t.setSelectionRange(t.start, t.end ?? t.start);
+      else if (t.to === "relative") {
+        const e = this.#i + t.delta, s = t.collapse ? e : this.#n + t.delta;
+        this.#t.setSelectionRange(e, s);
+      } else if (t.to === "startOfLine") {
+        const [e] = a(
+          this.#e,
+          t.startOf
+        );
+        this.#t.setSelectionRange(e, e);
+      } else if (t.to === "endOfLine") {
+        const [, e] = a(this.#e, t.endOf);
+        this.#t.setSelectionRange(e, e);
+      } else if (t.to === "lines") {
+        const { start: e, end: s } = t, [i, n] = a(this.#e, e, s);
+        this.#t.setSelectionRange(i, n);
+      }
     }
   }
-}, w = function(t, s) {
-  let [n, c] = i(this, e, T);
-  s <= n ? (n += t.length, c += t.length) : s > n && s < c && (c += t.length);
-  const [d, x] = P(i(this, e, o), Math.max(s, 0));
-  u(this, e, d + t + x, k), l(this, e, L).call(this, { to: "absolute", start: n, end: c });
-}, H = function(t) {
-  l(this, e, w).call(this, t, i(this, e, g));
-}, g = function() {
-  var t;
-  return ((t = i(this, a)) == null ? void 0 : t.selectionStart) ?? 0;
-}, v = function() {
-  var t;
-  return ((t = i(this, a)) == null ? void 0 : t.selectionEnd) ?? 0;
-}, T = function() {
-  return [i(this, e, g), i(this, e, v)];
-}, V = function() {
-  return D(
-    i(this, e, o),
-    i(this, e, g),
-    i(this, e, v)
-  );
-}, o = function() {
-  var t;
-  return ((t = i(this, a)) == null ? void 0 : t.value) ?? "";
-}, k = function(t) {
-  if (!i(this, a)) return;
-  const [s, n] = i(this, e, T);
-  i(this, a).value = t, i(this, a).dispatchEvent(new InputEvent("input", { bubbles: !0 })), i(this, a).setSelectionRange(s, n);
-}, j = function(t) {
-  const s = () => {
-    l(this, e, C).call(this), u(this, m, i(this, e, o));
-  };
-  t.addEventListener("input", () => {
-    s();
-  });
-  const n = Object.getOwnPropertyDescriptor(
-    HTMLTextAreaElement.prototype,
-    "value"
-  );
-  Object.defineProperty(t, "value", {
-    get() {
-      var c;
-      return (c = n == null ? void 0 : n.get) == null ? void 0 : c.call(t);
-    },
-    set(c) {
-      var d;
-      (d = n == null ? void 0 : n.set) == null || d.call(t, c), s();
-    },
-    configurable: !0,
-    enumerable: !0
-  });
-}, q = function() {
-  let t = this.querySelector(".t2-output");
-  return t || (t = document.createElement("div"), t.classList.add("t2-output"), this.appendChild(t)), t.setAttribute("aria-hidden", "true"), t.dataset.testid = "output", t;
-};
+  #o(t, e) {
+    let [s, i] = this.#f;
+    e <= s ? (s += t.length, i += t.length) : e > s && e < i && (i += t.length);
+    const [n, r] = c(this.#e, Math.max(e, 0));
+    this.#e = n + t + r, this.#l({ to: "absolute", start: s, end: i });
+  }
+  #b(t) {
+    this.#o(t, this.#i);
+  }
+  get #i() {
+    return this.#t?.selectionStart ?? 0;
+  }
+  get #n() {
+    return this.#t?.selectionEnd ?? 0;
+  }
+  get #f() {
+    return [this.#i, this.#n];
+  }
+  get #E() {
+    return u(
+      this.#e,
+      this.#i,
+      this.#n
+    );
+  }
+  get #e() {
+    return this.#t?.value ?? "";
+  }
+  set #e(t) {
+    if (!this.#t) return;
+    const [e, s] = this.#f;
+    this.#t.value = t, this.#t.dispatchEvent(new InputEvent("input", { bubbles: !0 })), this.#t.setSelectionRange(e, s);
+  }
+  #v(t) {
+    const e = () => {
+      this.#h(), this.#a = this.#e;
+    };
+    t.addEventListener("input", () => {
+      e();
+    });
+    const s = Object.getOwnPropertyDescriptor(
+      HTMLTextAreaElement.prototype,
+      "value"
+    );
+    Object.defineProperty(t, "value", {
+      get() {
+        return s?.get?.call(t);
+      },
+      set(i) {
+        s?.set?.call(t, i), e();
+      },
+      configurable: !0,
+      enumerable: !0
+    });
+  }
+  #m() {
+    let t = this.querySelector(".t2-output");
+    return t || (t = document.createElement("div"), t.classList.add("t2-output"), this.appendChild(t)), t.setAttribute("aria-hidden", "true"), t.dataset.testid = "output", t;
+  }
+}
 export {
-  G as Textarea2
+  f as Textarea2
 };
