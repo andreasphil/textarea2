@@ -78,8 +78,8 @@ describe("autocomplete", () => {
 
     const items = screen.getAllByRole("button");
     expect(items).toHaveLength(2);
-    expect(items[0]).toHaveAttribute("data-active", "true");
-    expect(items[1]).not.toHaveAttribute("data-active");
+    expect(items[0]).toHaveAttribute("active", "true");
+    expect(items[1]).not.toHaveAttribute("active");
   });
 
   test("moves the focus up and down", async () => {
@@ -90,18 +90,18 @@ describe("autocomplete", () => {
 
     let items = screen.getAllByRole("button");
     expect(items).toHaveLength(2);
-    expect(items[0]).toHaveAttribute("data-active", "true");
-    expect(items[1]).not.toHaveAttribute("data-active");
+    expect(items[0]).toHaveAttribute("active", "true");
+    expect(items[1]).not.toHaveAttribute("active");
 
     await user.type(textbox, "{ArrowDown}");
     items = screen.getAllByRole("button");
-    expect(items[0]).not.toHaveAttribute("data-active");
-    expect(items[1]).toHaveAttribute("data-active", "true");
+    expect(items[0]).not.toHaveAttribute("active");
+    expect(items[1]).toHaveAttribute("active", "true");
 
     await user.type(textbox, "{ArrowUp}");
     items = screen.getAllByRole("button");
-    expect(items[0]).toHaveAttribute("data-active", "true");
-    expect(items[1]).not.toHaveAttribute("data-active");
+    expect(items[0]).toHaveAttribute("active", "true");
+    expect(items[1]).not.toHaveAttribute("active");
   });
 
   test("doesn't move the focus past the last element", async () => {
@@ -112,13 +112,13 @@ describe("autocomplete", () => {
 
     let items = screen.getAllByRole("button");
     expect(items).toHaveLength(2);
-    expect(items[0]).toHaveAttribute("data-active", "true");
-    expect(items[1]).not.toHaveAttribute("data-active");
+    expect(items[0]).toHaveAttribute("active", "true");
+    expect(items[1]).not.toHaveAttribute("active");
 
     await user.type(textbox, "{ArrowDown}{ArrowDown}");
     items = screen.getAllByRole("button");
-    expect(items[0]).not.toHaveAttribute("data-active");
-    expect(items[1]).toHaveAttribute("data-active", "true");
+    expect(items[0]).not.toHaveAttribute("active");
+    expect(items[1]).toHaveAttribute("active", "true");
   });
 
   test("doesn't move the focus before the first element", async () => {
@@ -129,13 +129,13 @@ describe("autocomplete", () => {
 
     let items = screen.getAllByRole("button");
     expect(items).toHaveLength(2);
-    expect(items[0]).toHaveAttribute("data-active", "true");
-    expect(items[1]).not.toHaveAttribute("data-active");
+    expect(items[0]).toHaveAttribute("active", "true");
+    expect(items[1]).not.toHaveAttribute("active");
 
     await user.type(textbox, "{ArrowUp}");
     items = screen.getAllByRole("button");
-    expect(items[0]).toHaveAttribute("data-active", "true");
-    expect(items[1]).not.toHaveAttribute("data-active");
+    expect(items[0]).toHaveAttribute("active", "true");
+    expect(items[1]).not.toHaveAttribute("active");
   });
 
   test("hides the menu when the trigger is deleted", async () => {

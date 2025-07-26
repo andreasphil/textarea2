@@ -179,7 +179,7 @@ export class AutocompletePlugin implements T2Plugin {
         value(),
         this.#activeAc.start,
         selectionEnd() + 1,
-        result
+        result,
       );
 
       value(next);
@@ -267,7 +267,7 @@ export class AutocompletePlugin implements T2Plugin {
         const li = document.createElement("li");
 
         const button = document.createElement("button");
-        if (state.focusedIndex === i) button.dataset.active = "true";
+        if (state.focusedIndex === i) button.setAttribute("active", "true");
         button.addEventListener("click", () => {
           this.#execAutocomplete(command);
         });

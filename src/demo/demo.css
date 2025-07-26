@@ -79,7 +79,7 @@ menu {
     padding: 0.25rem 0.5rem;
     width: 100%;
 
-    &[data-active="true"] {
+    &[active="true"] {
       background-color: lightskyblue;
     }
   }
