@@ -33,12 +33,12 @@
     "preversion": "node --run test && node --run build; git add dist/"
   },
   "devDependencies": {
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.7.0",
     "@testing-library/user-event": "^14.6.1",
     "jsdom": "^26.1.0",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.6",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.2",
     "vitest": "^3.2.4"
   }
 }
