@@ -27,10 +27,11 @@
     "dev": "vite",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "node --run build:bundle; node --run build:types",
+    "build": "node --run build:bundle && node --run build:types",
     "build:types": "tsc -p tsconfig.lib.json",
     "build:bundle": "vite build",
-    "preversion": "node --run test && node --run build; git add dist/"
+    "preversion": "node --run test && node --run build && git add dist/",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",

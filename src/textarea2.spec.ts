@@ -277,7 +277,7 @@ describe("textarea2", () => {
       const handler = vi.fn();
       textarea.addEventListener("change", handler);
 
-      await await textarea2.act(({ value }) => {
+      await textarea2.act(({ value }) => {
         value("Hello ...");
         value("... world!");
       });
