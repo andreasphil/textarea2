@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: { alias: { "@": resolve("./src") } },
 
   build: {
+    target: "esnext",
     lib: {
       entry: {
         textarea2: resolve("./src/textarea2.ts"),
