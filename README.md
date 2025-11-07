@@ -54,7 +54,7 @@ Because Textarea2 _progressively enhances_ an existing textarea, most of the tim
 
 ### Plugins
 
-Most of the functionality is provided by [plugins](./src/plugins/). Plugins need to be enabled _per instance_:
+Most of the functionality is provided by [plugins](./src/plugins/). Plugins need to be enabled _per instance:_
 
 ```js
 import {
@@ -171,7 +171,7 @@ Textarea2 is a web component. It is built with [Vite](https://vitejs.dev). Packa
 node --run dev          # Start development server
 node --run test         # Run tests once
 node --run test:watch   # Run tests in watch mode
-node --run build        # Bundle for production
+node --run build        # Typecheck, emit declarations, and bundle
 ```
 
 ## Credits
