@@ -31,7 +31,7 @@
     "@testing-library/user-event": "^14.6.1",
     "jsdom": "^27.1.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.6"
+    "vitest": "^4.0.8"
   },
   "dependencies": {
     "rolldown-vite": "^7.2.2"
