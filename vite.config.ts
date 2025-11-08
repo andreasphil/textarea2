@@ -1,21 +1,12 @@
-import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "vite";
-
-function resolve(path: string) {
-  return fileURLToPath(new URL(path, import.meta.url));
-}
+import { defineConfig } from "rolldown-vite";
 
 export default defineConfig({
-  resolve: { alias: { "@": resolve("./src") } },
-
   build: {
-    target: "esnext",
     lib: {
-      entry: {
-        textarea2: resolve("./src/textarea2.ts"),
-        plugins: resolve("./src/plugins/index.ts"),
-      },
+      entry: "./src/textarea2.ts",
       formats: ["es"],
     },
+    minify: false,
+    target: "esnext",
   },
 });

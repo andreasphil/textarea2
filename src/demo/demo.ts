@@ -1,12 +1,10 @@
-import * as Plugins from "../plugins";
-import { AutoComplete } from "../plugins/autocomplete";
-import { Textarea2 } from "../textarea2";
+import * as T2 from "../textarea2";
 
-Textarea2.define();
+T2.Textarea2.define();
 
-const textarea2 = document.querySelector("textarea-2") as Textarea2;
+const textarea2 = document.querySelector("textarea-2") as T2.Textarea2;
 
-const completions: AutoComplete[] = [
+const completions: T2.AutoComplete[] = [
   {
     trigger: "/",
     id: "slashcommand",
@@ -33,9 +31,9 @@ const completions: AutoComplete[] = [
 ];
 
 textarea2!.use(
-  new Plugins.AutocompletePlugin(completions),
-  new Plugins.TabsPlugin(),
-  new Plugins.FlipLinesPlugin(),
-  new Plugins.FullLineEditsPlugin(),
-  new Plugins.ListsPlugin()
+  new T2.AutocompletePlugin(completions),
+  new T2.TabsPlugin(),
+  new T2.FlipLinesPlugin(),
+  new T2.FullLineEditsPlugin(),
+  new T2.ListsPlugin()
 );

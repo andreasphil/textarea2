@@ -79,7 +79,7 @@ export class AutocompletePlugin implements T2Plugin {
     this.#unsubscribe?.abort();
   }
 
-  // Keybindings ------------------------------------------
+  // Keybindings --------------------------------------------
 
   #keydown(event: KeyboardEvent) {
     if (!this.#activeAc) return;
@@ -144,7 +144,7 @@ export class AutocompletePlugin implements T2Plugin {
     }
   }
 
-  // Autocomplete lifecycle -------------------------------
+  // Autocomplete lifecycle ---------------------------------
 
   #activeAc: ActiveAc | null = null;
 
@@ -196,7 +196,7 @@ export class AutocompletePlugin implements T2Plugin {
     this.#toggleMenu(false);
   }
 
-  // Rendering --------------------------------------------
+  // Rendering ----------------------------------------------
 
   #createMenuElement(): HTMLMenuElement {
     const menu = document.createElement("menu");

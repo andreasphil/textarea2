@@ -1,6 +1,5 @@
-import { T2RenderFn } from "./lib/render";
+import { type T2RenderFn } from "./lib/render";
 import { type T2Plugin } from "./plugins";
-import "./textarea2.css";
 export { type T2RenderFn } from "./lib/render";
 export type T2Context = {
     focus: (selection?: T2Selection) => void;
@@ -31,6 +30,7 @@ export type T2Selection = {
     start: number;
     end: number;
 };
+export * from "./plugins";
 export declare class Textarea2 extends HTMLElement {
     #private;
     static define(tag?: string): void;

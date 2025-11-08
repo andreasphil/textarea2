@@ -36,12 +36,6 @@ import { Textarea2 } from "@andreasphil/textarea2";
 Textarea2.define();
 ```
 
-Import the styling for the textarea in your CSS or JS:
-
-```css
-@import "@andreasphil/textarea2/style.css";
-```
-
 In your HTML, wrap your `textarea` with a `textarea-2` element:
 
 ```html
@@ -62,7 +56,7 @@ import {
   FullLineEditsPlugin,
   ListsPlugin,
   TabsPlugin,
-} from "@andreasphil/textarea2/plugins";
+} from "@andreasphil/textarea2";
 
 const textarea2 = document.querySelector("textarea-2");
 
@@ -80,7 +74,7 @@ If you find yourself re-using the same set of plugins all the time, I recommend 
 Autocompletions are also provided as a plugin, but need a bit more configuration than the other plugins:
 
 ```js
-import { AutocompletePlugin } from "@andreasphil/textarea2/plugins";
+import { AutocompletePlugin } from "@andreasphil/textarea2";
 
 const textarea2 = document.querySelector("textarea-2");
 

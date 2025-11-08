@@ -1,7 +1,6 @@
-import { createPlaintextRender, T2RenderFn } from "./lib/render";
+import { createPlaintextRender, type T2RenderFn } from "./lib/render";
 import * as Text from "./lib/text";
 import { type T2Plugin } from "./plugins";
-import "./textarea2.css";
 
 export { type T2RenderFn } from "./lib/render";
 
@@ -23,8 +22,16 @@ export type T2Selection =
   | { to: "endOfLine"; endOf: number }
   | { to: "lines"; start: number; end: number };
 
+export * from "./plugins";
+
+const tag = (strings: TemplateStringsArray, ...values: unknown[]) =>
+  String.raw({ raw: strings }, ...values);
+
+const css = tag;
+
 export class Textarea2 extends HTMLElement {
-  // Static properties + configuration --------------------
+  // Static properties + configuration ----------------------
+
   static define(tag = "textarea-2") {
     customElements.define(tag, this);
   }
@@ -33,7 +40,70 @@ export class Textarea2 extends HTMLElement {
     return [];
   }
 
-  // Internal state ---------------------------------------
+  static get #style() {
+    return css`
+      @scope {
+        :scope {
+          cursor: text;
+          display: grid;
+          grid-template-areas: "stack";
+
+          &:has(textarea:read-only) {
+            cursor: unset;
+          }
+
+          &[overscroll] > .t2-output {
+            padding-bottom: 12lh;
+          }
+        }
+
+        textarea {
+          all: unset;
+          caret-color: inherit;
+          color: transparent;
+          min-height: 1lh;
+          padding: 0;
+          resize: none;
+        }
+
+        :is(textarea, .t2-output) {
+          background: inherit;
+          box-sizing: border-box;
+          display: block;
+          font: inherit;
+          grid-area: stack;
+          overflow: hidden;
+          white-space: pre-wrap;
+        }
+
+        .t2-output {
+          pointer-events: none;
+
+          &::selection {
+            background: transparent;
+          }
+
+          > * {
+            min-height: 1lh;
+          }
+        }
+
+        .t2-autocomplete {
+          inset-inline-start: var(--t2-autocomplete-x, 1rem);
+          inset-block-start: var(--t2-autocomplete-y, 1rem);
+          margin: 0;
+          position: fixed;
+        }
+
+        .t2-autocomplete-position-helper {
+          grid-area: stack;
+          white-space: pre-wrap;
+        }
+      }
+    `;
+  }
+
+  // Internal state -----------------------------------------
 
   #textarea: HTMLTextAreaElement | null = null;
 
@@ -43,7 +113,7 @@ export class Textarea2 extends HTMLElement {
 
   #savedValue = "";
 
-  // Lifecycle --------------------------------------------
+  // Lifecycle ----------------------------------------------
 
   constructor() {
     super();
@@ -60,6 +130,11 @@ export class Textarea2 extends HTMLElement {
     // Wire up presentation layer
     const output = this.#createOrRecycleOutputElement();
     this.#output = output;
+
+    // Inject styles
+    const node = document.createElement("style");
+    node.innerHTML = Textarea2.#style;
+    this.insertBefore(node, textarea);
 
     // Global events
     this.addEventListener("click", () => this.#focus());
@@ -78,7 +153,7 @@ export class Textarea2 extends HTMLElement {
 
   attributeChangedCallback() {}
 
-  // Presentation -----------------------------------------
+  // Presentation -------------------------------------------
 
   #renderFn: T2RenderFn = createPlaintextRender();
 
@@ -99,7 +174,7 @@ export class Textarea2 extends HTMLElement {
     this.#renderFn({ value: this.#value, oldValue, out: this.#output });
   }
 
-  // Plugins ----------------------------------------------
+  // Plugins ------------------------------------------------
 
   use(...plugins: T2Plugin[]) {
     plugins.forEach((plugin) => {
@@ -121,7 +196,7 @@ export class Textarea2 extends HTMLElement {
     plugin.disconnected?.();
   }
 
-  // Public interface -------------------------------------
+  // Public interface ---------------------------------------
 
   async act(callback: (c: T2Context) => void | Promise<void>) {
     let needsEmitChange = false;
@@ -153,7 +228,7 @@ export class Textarea2 extends HTMLElement {
     }
   }
 
-  // Internal utilities -----------------------------------
+  // Internal utilities -------------------------------------
 
   #focus(selection?: T2Selection) {
     this.#textarea?.focus();
@@ -181,7 +256,7 @@ export class Textarea2 extends HTMLElement {
     else if (opts.to === "startOfLine") {
       const [start] = Text.extendSelectionToFullLines(
         this.#value,
-        opts.startOf
+        opts.startOf,
       );
       this.#textarea.setSelectionRange(start, start);
     }
@@ -235,7 +310,7 @@ export class Textarea2 extends HTMLElement {
     return Text.getSelectedLines(
       this.#value,
       this.#selectionStart,
-      this.#selectionEnd
+      this.#selectionEnd,
     );
   }
 
@@ -263,7 +338,7 @@ export class Textarea2 extends HTMLElement {
 
     const valueProp = Object.getOwnPropertyDescriptor(
       HTMLTextAreaElement.prototype,
-      "value"
+      "value",
     );
 
     Object.defineProperty(el, "value", {
