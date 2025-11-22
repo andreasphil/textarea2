@@ -29,11 +29,9 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/user-event": "^14.6.1",
-    "jsdom": "^27.1.0",
+    "jsdom": "^27.2.0",
+    "rolldown-vite": "^7.2.7",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.8"
-  },
-  "dependencies": {
-    "rolldown-vite": "^7.2.2"
+    "vitest": "^4.0.10"
   }
 }
