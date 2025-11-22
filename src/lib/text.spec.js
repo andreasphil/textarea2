@@ -1,8 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
   continueList,
-  type ContinueListResult,
-  type ContinueListRule,
   continueListRules,
   deleteLine,
   duplicateLine,
@@ -282,7 +280,7 @@ describe("text", () => {
 
     test("continues a list with the same marker", () => {
       const continued = continueList("- foo", rules);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "- foo",
         nextLine: "- ",
         marker: "- ",
@@ -293,7 +291,7 @@ describe("text", () => {
 
     test("continues a list with a custom marker", () => {
       const continued = continueList("1. foo", rules);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "1. foo",
         nextLine: "2. ",
         marker: "2. ",
@@ -304,7 +302,7 @@ describe("text", () => {
 
     test("adds an empty line if there is no list", () => {
       const continued = continueList("foo", rules);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "foo",
         nextLine: "",
         marker: null,
@@ -315,7 +313,7 @@ describe("text", () => {
 
     test("splits a line when continuing a list", () => {
       const continued = continueList("- foo bar", rules, 6);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "- foo ",
         nextLine: "- bar",
         marker: "- ",
@@ -326,7 +324,7 @@ describe("text", () => {
 
     test("splits a line when there is no list", () => {
       const continued = continueList("foo bar", rules, 4);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "foo ",
         nextLine: "bar",
         marker: null,
@@ -337,7 +335,7 @@ describe("text", () => {
 
     test("ends a list when continuing an empty item", () => {
       const continued = continueList("- ", rules);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "",
         nextLine: null,
         marker: "- ",
@@ -348,7 +346,7 @@ describe("text", () => {
 
     test("continues an unordered list with *", () => {
       const continued = continueList("* foo", [continueListRules.unordered]);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "* foo",
         nextLine: "* ",
         marker: "* ",
@@ -359,7 +357,7 @@ describe("text", () => {
 
     test("continues an unordered list with -", () => {
       const continued = continueList("- foo", [continueListRules.unordered]);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "- foo",
         nextLine: "- ",
         marker: "- ",
@@ -370,7 +368,7 @@ describe("text", () => {
 
     test("continues a numbered list", () => {
       const continued = continueList("1. foo", [continueListRules.numbered]);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "1. foo",
         nextLine: "2. ",
         marker: "2. ",
@@ -381,7 +379,7 @@ describe("text", () => {
 
     test("continues indentation", () => {
       const continued = continueList("\tfoo", [continueListRules.indent]);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "\tfoo",
         nextLine: "\t",
         marker: "\t",
@@ -392,7 +390,7 @@ describe("text", () => {
 
     test("inserts a blank line when continuing with the cursor at the start of the line", () => {
       const continued = continueList("- Foo", rules, 0);
-      expect(continued).toStrictEqual<ContinueListResult>({
+      expect(continued).toStrictEqual({
         currentLine: "",
         nextLine: "- Foo",
         marker: null,
@@ -429,8 +427,10 @@ describe("text", () => {
     });
 
     test("merges two different list markers if they're of the same type", () => {
-      const rule: ContinueListRule = {
+      const rule = {
         pattern: /\t*\[.\] /,
+
+        /** @param {string} match */
         next: (match) => match.replace(/\[.\]/, "[ ]"),
       };
 

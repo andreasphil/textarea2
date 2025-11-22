@@ -2,9 +2,9 @@ import { screen } from "@testing-library/dom";
 import { afterEach, beforeAll, describe, expect, test, vi } from "vitest";
 import { render as baseRender, cleanup } from "../lib/test";
 import { Textarea2 } from "../textarea2";
-import { type AutoComplete, AutocompletePlugin } from "./autocomplete";
+import { AutocompletePlugin } from "./autocomplete";
 
-const exampleCompletions: AutoComplete[] = [
+const exampleCompletions = [
   {
     trigger: "/",
     id: "command",
@@ -15,6 +15,7 @@ const exampleCompletions: AutoComplete[] = [
   },
 ];
 
+/** @param {import("./autocomplete").AutoComplete[]} [completions]  */
 function render(completions = exampleCompletions) {
   const result = baseRender();
   result.textarea2.use(new AutocompletePlugin(completions));
@@ -22,11 +23,14 @@ function render(completions = exampleCompletions) {
 }
 
 // Workaround while JSOM has no support for :popover-open selector
-function expectToBeVisible(el: HTMLElement) {
+
+/** @param {Element} el  */
+function expectToBeVisible(el) {
   expect(el).toHaveAttribute("data-popover-open", "true");
 }
 
-function expectNotToBeVisible(el: HTMLElement) {
+/** @param {Element} el  */
+function expectNotToBeVisible(el) {
   expect(el).not.toHaveAttribute("data-popover-open");
 }
 

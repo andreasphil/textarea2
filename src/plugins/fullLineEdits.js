@@ -1,12 +1,17 @@
-import { type T2Plugin, type T2PluginContext } from ".";
-import { deleteLine, duplicateLine, splitLines } from "../lib/text";
-import { Textarea2 } from "../textarea2";
+import { deleteLine, duplicateLine, splitLines } from "../lib/text.js";
+import { Textarea2 } from "../textarea2.js";
 
-export class FullLineEditsPlugin implements T2Plugin {
-  #unsubscribe: AbortController | undefined = undefined;
-  #t2: Textarea2 | undefined = undefined;
+/** @import { T2PluginContext } from "./index.js" */
 
-  connected(context: T2PluginContext) {
+export class FullLineEditsPlugin {
+  /** @type {AbortController | undefined} */
+  #unsubscribe = undefined;
+
+  /** @type {Textarea2 | undefined} */
+  #t2 = undefined;
+
+  /** @param {T2PluginContext} context */
+  connected(context) {
     this.#unsubscribe = new AbortController();
     this.#t2 = context.t2;
 
@@ -19,7 +24,8 @@ export class FullLineEditsPlugin implements T2Plugin {
     this.#unsubscribe?.abort();
   }
 
-  #keydown(event: KeyboardEvent) {
+  /** @param {KeyboardEvent} event */
+  #keydown(event) {
     let prevent = true;
 
     this.#t2?.act(async (c) => {

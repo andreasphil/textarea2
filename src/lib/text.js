@@ -1,29 +1,57 @@
 // Manipulating lines -------------------------------------
 
-export function splitLines(text: string): string[] {
+/**
+ * @param {string} text
+ * @returns {string[]}
+ */
+export function splitLines(text) {
   return text.split("\n");
 }
 
-export function joinLines(lines: string[]): string {
+/**
+ * @param {string[]} lines
+ * @returns {string}
+ */
+export function joinLines(lines) {
   return lines.join("\n");
 }
 
-export function splitAt(text: string, index: number): [string, string] {
+/**
+ * @param {string} text
+ * @param {number} index
+ * @returns {[string, string]}
+ */
+export function splitAt(text, index) {
   return [text.slice(0, index), text.slice(index)];
 }
 
-export function deleteLine(text: string, index: number): string {
+/**
+ * @param {string} text
+ * @param {number} index
+ * @returns {string}
+ */
+export function deleteLine(text, index) {
   const result = splitLines(text).toSpliced(index, 1);
   return joinLines(result);
 }
 
-export function duplicateLine(text: string, index: number): string {
+/**
+ * @param {string} text
+ * @param {number} index
+ * @returns {string}
+ */
+export function duplicateLine(text, index) {
   let l = splitLines(text);
   if (!l.length || index > l.length) return text;
   return joinLines([...l.slice(0, index), l[index], ...l.slice(index)]);
 }
 
-export function flipLines(a: string, b: string): [string, string] {
+/**
+ * @param {string} a
+ * @param {string} b
+ * @returns {[string, string]}
+ */
+export function flipLines(a, b) {
   return [b, a];
 }
 
@@ -31,23 +59,26 @@ export function flipLines(a: string, b: string): [string, string] {
  * Replaces the character range in the specified string with the new value.
  * Similarly to `String.prototype.substring`, characters are replaced from
  * (and including) `from`, up to (but not including) `end`.
+ *
+ * @param {string} text
+ * @param {number} from
+ * @param {number} to
+ * @param {string} replaceWith
+ * @returns {string}
  */
-export function replaceRange(
-  text: string,
-  from: number,
-  to: number,
-  replaceWith: string
-) {
+export function replaceRange(text, from, to, replaceWith) {
   return text.substring(0, from) + replaceWith + text.substring(to - 1);
 }
 
 // Selection and cursor position --------------------------
 
-export function getSelectedLines(
-  text: string,
-  from: number,
-  to = from
-): [number, number] {
+/**
+ * @param {string} text
+ * @param {number} from
+ * @param {number} [to]
+ * @returns {[number, number]}
+ */
+export function getSelectedLines(text, from, to = from) {
   const lines = splitLines(text);
   let cursor = 0;
   let startLine = -1;
@@ -68,11 +99,13 @@ export function getSelectedLines(
   return [Math.max(startLine, 0), endLine === -1 ? lines.length - 1 : endLine];
 }
 
-export function extendSelectionToFullLines(
-  text: string,
-  from: number,
-  to = from
-): [number, number] {
+/**
+ * @param {string} text
+ * @param {number} from
+ * @param {number} [to]
+ * @returns {[number, number]}
+ */
+export function extendSelectionToFullLines(text, from, to = from) {
   const lines = splitLines(text);
   const lengths = lines.map((i) => i.length);
 
@@ -98,13 +131,11 @@ export function extendSelectionToFullLines(
  * For a cursor (e.g. selectionStart in a textarea) in a value, returns the
  * position of the cursor relative to the line it is in.
  *
- * @param text The value containing the cursor
- * @param cursor The position of the cursor
+ * @param {string} text
+ * @param {number} cursor
+ * @returns {number | undefined}
  */
-export function getCursorInLine(
-  text: string,
-  cursor: number
-): number | undefined {
+export function getCursorInLine(text, cursor) {
   if (cursor > text.length || cursor < 0) return undefined;
 
   const beforeCursor = text.slice(0, cursor);
@@ -114,21 +145,27 @@ export function getCursorInLine(
 
 // List continuation --------------------------------------
 
-export type ContinueListRule = {
-  pattern: RegExp;
-  next: "same" | ((match: string) => string);
-};
+/**
+ * @typedef {object} ContinueListRule
+ * @property {RegExp} pattern
+ * @property {"same" | ((match: string) => string)} next
+ */
 
-export type ContinueListResult = {
-  currentLine: string;
-  nextLine: string | null;
-  marker: string | null;
-  didContinue: boolean;
-  didEnd: boolean;
-};
+/**
+ * @typedef {object} ContinueListResult
+ * @property {string} currentLine
+ * @property {string | null} nextLine
+ * @property {string | null} marker
+ * @property {boolean} didContinue
+ * @property {boolean} didEnd
+ */
 
-/** Default rules for list continuation. */
-export const continueListRules: Record<string, ContinueListRule> = {
+/**
+ * Default rules for list continuation.
+ *
+ * @type {Record<string, ContinueListRule>}
+ */
+export const continueListRules = {
   unordered: { pattern: /^\t*[-*] /, next: "same" },
   indent: { pattern: /^\t+/, next: "same" },
   numbered: {
@@ -143,18 +180,20 @@ export const continueListRules: Record<string, ContinueListRule> = {
  * an empty next line is returned. If a cursor is given, the line is split at
  * the cursor and the continuation text is inserted between the two parts.
  *
- * @param line The line to check
- * @param rules The rules to check against
- * @param cursor The cursor position to split the line at, defaults to end of line
+ * @param {string} line
+ * @param {ContinueListRule[]} rules
+ * @param {number} [cursor]
+ * @returns {ContinueListResult} The result of the continuation
  */
-export function continueList(
-  line: string,
-  rules: ContinueListRule[],
-  cursor = line.length
-): ContinueListResult {
-  let matchedRule: ContinueListRule["next"] | undefined = undefined;
-  let match: RegExpMatchArray | null = null;
-  let nextMarker: string | null = null;
+export function continueList(line, rules, cursor = line.length) {
+  /** @type {ContinueListRule["next"] | undefined} */
+  let matchedRule = undefined;
+
+  /** @type {RegExpMatchArray | null} */
+  let match = null;
+
+  /** @type {string | null} */
+  let nextMarker = null;
 
   for (let i = 0; i < rules.length && !matchedRule; i++) {
     match = line.match(rules[i].pattern);
@@ -180,10 +219,11 @@ export function continueList(
   };
 }
 
-export type MergeListResult = {
-  currentLine: string;
-  marker: string;
-};
+/**
+ * @typedef {object} MergeListResult
+ * @property {string} currentLine
+ * @property {string} marker
+ */
 
 /**
  * Given some already existing line, a string of text that should be inserted
@@ -192,17 +232,17 @@ export type MergeListResult = {
  * both are true, both will be consolidated in order to avoid duplicate list
  * markers.
  *
- * @param line Existing line
- * @param insert Newly inserted content
- * @param rules The rules to check against
+ * @param {string} line
+ * @param {string} insert
+ * @param {ContinueListRule[]} rules
+ * @returns {MergeListResult | null}
  */
-export function mergeList(
-  line: string,
-  insert: string,
-  rules: ContinueListRule[]
-): MergeListResult | null {
-  let pattern: RegExp | null = null;
-  let insertMatch: RegExpMatchArray | null = null;
+export function mergeList(line, insert, rules) {
+  /** @type {RegExp | null} */
+  let pattern = null;
+
+  /** @type {RegExpMatchArray | null} */
+  let insertMatch = null;
 
   for (let i = 0; i < rules.length && !pattern; i++) {
     const match = line.match(rules[i].pattern);
@@ -220,9 +260,14 @@ export function mergeList(
 
 // Indentation --------------------------------------------
 
-export type IndentMode = "indent" | "outdent";
+/** @typedef {"indent" | "outdent"} IndentMode */
 
-export function indent(lines: string[], mode: IndentMode = "indent"): string[] {
+/**
+ * @param {string[]} lines
+ * @param {IndentMode} [mode]
+ * @returns {string[]}
+ */
+export function indent(lines, mode = "indent") {
   return mode === "indent"
     ? lines.map((i) => `\t${i}`)
     : lines.map((i) => (i.startsWith("\t") ? i.slice(1) : i));

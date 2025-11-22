@@ -1,12 +1,17 @@
-import { type T2Plugin, type T2PluginContext } from ".";
-import { flipLines, joinLines, splitLines } from "../lib/text";
-import { Textarea2 } from "../textarea2";
+import { flipLines, joinLines, splitLines } from "../lib/text.js";
+import { Textarea2 } from "../textarea2.js";
 
-export class FlipLinesPlugin implements T2Plugin {
-  #unsubscribe: AbortController | undefined = undefined;
-  #t2: Textarea2 | undefined = undefined;
+/** @import { T2PluginContext } from "./index.js" */
 
-  connected(context: T2PluginContext) {
+export class FlipLinesPlugin {
+  /** @type {AbortController | undefined} */
+  #unsubscribe = undefined;
+
+  /** @type {Textarea2 | undefined} */
+  #t2 = undefined;
+
+  /** @param {T2PluginContext} context */
+  connected(context) {
     this.#unsubscribe = new AbortController();
     this.#t2 = context.t2;
 
@@ -19,7 +24,8 @@ export class FlipLinesPlugin implements T2Plugin {
     this.#unsubscribe?.abort();
   }
 
-  #keydown(event: KeyboardEvent) {
+  /** @param {KeyboardEvent} event */
+  #keydown(event) {
     let handled = true;
 
     if (event.altKey && event.key === "ArrowDown") this.#flip("down");
@@ -29,7 +35,8 @@ export class FlipLinesPlugin implements T2Plugin {
     if (handled) event.preventDefault();
   }
 
-  #flip(direction: "up" | "down"): void {
+  /** @param {"up" | "down"} direction */
+  #flip(direction) {
     this.#t2?.act(({ selectedLines, select, value }) => {
       const newLines = splitLines(value());
       const [line1, line2] = selectedLines();

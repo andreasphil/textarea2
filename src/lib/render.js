@@ -1,12 +1,16 @@
-import { splitLines } from "./text";
+import { splitLines } from "./text.js";
 
-export type T2RenderFn = (context: {
-  value: string;
-  oldValue: string;
-  out: HTMLElement;
-}) => void;
+/**
+ * @typedef {object} T2RenderContext
+ * @property {string} value
+ * @property {string} oldValue
+ * @property {HTMLElement} out
+ */
 
-export function createPlaintextRender(): T2RenderFn {
+/** @typedef {(context: T2RenderContext) => void} T2RenderFn */
+
+/** @returns {T2RenderFn} Render function */
+export function createPlaintextRender() {
   return ({ value, out }) => {
     const lines = splitLines(value);
     const els = Array.from(out.children);

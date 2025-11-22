@@ -1,31 +1,66 @@
-import { createPlaintextRender, type T2RenderFn } from "./lib/render";
-import * as Text from "./lib/text";
-import { type T2Plugin } from "./plugins";
+import { createPlaintextRender } from "./lib/render.js";
+import * as Text from "./lib/text.js";
 
-export { type T2RenderFn } from "./lib/render";
+/** @import { T2RenderFn } from "./lib/render.js" */
+/** @import { T2Plugin } from "./plugins/index.js" */
 
-export type T2Context = {
-  focus: (selection?: T2Selection) => void;
-  insertAt: (value: string, position: number) => void;
-  select: (selection: T2Selection) => void;
-  selectedLines: () => [from: number, to: number];
-  selectionEnd: () => number;
-  selectionStart: () => number;
-  type: (value: string) => void;
-  value: (newValue?: string) => string;
-};
+/**
+ * @typedef {object} T2Context
+ * @property {(selection?: T2Selection) => void} focus
+ * @property {(value: string, position: number) => void} insertAt
+ * @property {(selection: T2Selection) => void} select
+ * @property {() => [number, number]} selectedLines
+ * @property {() => number} selectionEnd
+ * @property {() => number} selectionStart
+ * @property {(value: string) => void} type
+ * @property {(newValue?: string) => string} value
+ */
 
-export type T2Selection =
-  | { to: "absolute"; start: number; end?: number }
-  | { to: "relative"; delta: number; collapse?: boolean }
-  | { to: "startOfLine"; startOf: number }
-  | { to: "endOfLine"; endOf: number }
-  | { to: "lines"; start: number; end: number };
+/**
+ * @typedef {object} T2SelectionAbsolute
+ * @property {"absolute"} to
+ * @property {number} start
+ * @property {number} [end]
+ */
 
-export * from "./plugins";
+/**
+ * @typedef {object} T2SelectionRelative
+ * @property {"relative"} to
+ * @property {number} delta
+ * @property {boolean} [collapse]
+ */
 
-const tag = (strings: TemplateStringsArray, ...values: unknown[]) =>
-  String.raw({ raw: strings }, ...values);
+/**
+ * @typedef {object} T2SelectionStartOfLine
+ * @property {"startOfLine"} to
+ * @property {number} startOf
+ */
+
+/**
+ * @typedef {object} T2SelectionEndOfLine
+ * @property {"endOfLine"} to
+ * @property {number} endOf
+ */
+
+/**
+ * @typedef {object} T2SelectionLines
+ * @property {"lines"} to
+ * @property {number} start
+ * @property {number} end
+ */
+
+/**
+ * @typedef {T2SelectionAbsolute | T2SelectionRelative | T2SelectionStartOfLine | T2SelectionEndOfLine | T2SelectionLines} T2Selection
+ */
+
+export * from "./plugins/index.js";
+
+/**
+ * @param {TemplateStringsArray} strings
+ * @param {...unknown} values
+ * @returns {string}
+ */
+const tag = (strings, ...values) => String.raw({ raw: strings }, ...values);
 
 const css = tag;
 
@@ -105,12 +140,16 @@ export class Textarea2 extends HTMLElement {
 
   // Internal state -----------------------------------------
 
-  #textarea: HTMLTextAreaElement | null = null;
+  /** @type {HTMLTextAreaElement | null} */
+  #textarea = null;
 
-  #output: HTMLDivElement | null = null;
+  /** @type {HTMLDivElement | null} */
+  #output = null;
 
-  #plugins: Set<T2Plugin> = new Set();
+  /** @type {Set<T2Plugin>} */
+  #plugins = new Set();
 
+  /** @type {string} */
   #savedValue = "";
 
   // Lifecycle ----------------------------------------------
@@ -155,13 +194,16 @@ export class Textarea2 extends HTMLElement {
 
   // Presentation -------------------------------------------
 
-  #renderFn: T2RenderFn = createPlaintextRender();
+  /** @type {T2RenderFn} */
+  #renderFn = createPlaintextRender();
 
-  setRender(factory: () => T2RenderFn) {
+  /** @param {() => T2RenderFn} factory */
+  setRender(factory) {
     this.#renderFn = factory();
     this.#render(true);
   }
 
+  /** @param {boolean} [reset] */
   #render(reset = false) {
     if (!this.#output || this.#output.getAttribute("custom") !== null) return;
 
@@ -176,7 +218,11 @@ export class Textarea2 extends HTMLElement {
 
   // Plugins ------------------------------------------------
 
-  use(...plugins: T2Plugin[]) {
+  /**
+   * @param {...T2Plugin} plugins
+   * @returns {{use: (...plugins: T2Plugin[]) => any}}
+   */
+  use(...plugins) {
     plugins.forEach((plugin) => {
       this.#plugins.add(plugin);
 
@@ -188,20 +234,32 @@ export class Textarea2 extends HTMLElement {
     return { use: this.use.bind(this) };
   }
 
-  #connectPlugin(plugin: T2Plugin) {
-    plugin.connected({ t2: this, textarea: this.#textarea! });
+  /** @param {T2Plugin} plugin */
+  #connectPlugin(plugin) {
+    if (this.#textarea) {
+      plugin.connected({ t2: this, textarea: this.#textarea });
+    }
   }
 
-  #disconnectPlugin(plugin: T2Plugin) {
+  /** @param {T2Plugin} plugin */
+  #disconnectPlugin(plugin) {
     plugin.disconnected?.();
   }
 
   // Public interface ---------------------------------------
 
-  async act(callback: (c: T2Context) => void | Promise<void>) {
+  /**
+   * @param {(c: T2Context) => void | Promise<void>} callback
+   * @returns {Promise<void>}
+   */
+  async act(callback) {
     let needsEmitChange = false;
 
-    const value = (newValue?: string) => {
+    /**
+     * @param {string} [newValue]
+     * @returns {string}
+     */
+    const value = (newValue) => {
       if (typeof newValue === "string") {
         this.#value = newValue;
         needsEmitChange = true;
@@ -210,7 +268,8 @@ export class Textarea2 extends HTMLElement {
       return this.#value;
     };
 
-    const context: T2Context = {
+    /** @type {T2Context} */
+    const context = {
       focus: this.#focus.bind(this),
       insertAt: this.#insertAt.bind(this),
       select: this.#select.bind(this),
@@ -230,12 +289,14 @@ export class Textarea2 extends HTMLElement {
 
   // Internal utilities -------------------------------------
 
-  #focus(selection?: T2Selection) {
+  /** @param {T2Selection} [selection] */
+  #focus(selection) {
     this.#textarea?.focus();
     if (selection) this.#select(selection);
   }
 
-  #select(opts: T2Selection) {
+  /** @param {T2Selection} opts */
+  #select(opts) {
     if (!this.#textarea) return;
 
     // Set selection to a new range, ignoring the current selection
@@ -256,7 +317,7 @@ export class Textarea2 extends HTMLElement {
     else if (opts.to === "startOfLine") {
       const [start] = Text.extendSelectionToFullLines(
         this.#value,
-        opts.startOf,
+        opts.startOf
       );
       this.#textarea.setSelectionRange(start, start);
     }
@@ -275,7 +336,11 @@ export class Textarea2 extends HTMLElement {
     }
   }
 
-  #insertAt(value: string, position: number) {
+  /**
+   * @param {string} value
+   * @param {number} position
+   */
+  #insertAt(value, position) {
     let [selStart, selEnd] = this.#selection;
     if (position <= selStart) {
       selStart += value.length;
@@ -290,7 +355,8 @@ export class Textarea2 extends HTMLElement {
     this.#select({ to: "absolute", start: selStart, end: selEnd });
   }
 
-  #type(value: string) {
+  /** @param {string} value */
+  #type(value) {
     this.#insertAt(value, this.#selectionStart);
   }
 
@@ -310,15 +376,16 @@ export class Textarea2 extends HTMLElement {
     return Text.getSelectedLines(
       this.#value,
       this.#selectionStart,
-      this.#selectionEnd,
+      this.#selectionEnd
     );
   }
 
-  get #value(): string {
+  get #value() {
     return this.#textarea?.value ?? "";
   }
 
-  set #value(value: string) {
+  /** @param {string} value */
+  set #value(value) {
     if (!this.#textarea) return;
     const [selStart, selEnd] = this.#selection;
     this.#textarea.value = value;
@@ -326,7 +393,8 @@ export class Textarea2 extends HTMLElement {
     this.#textarea.setSelectionRange(selStart, selEnd);
   }
 
-  #observeValueChanges(el: HTMLTextAreaElement) {
+  /** @param {HTMLTextAreaElement} el */
+  #observeValueChanges(el) {
     const onValueChange = () => {
       this.#render();
       this.#savedValue = this.#value;
@@ -338,24 +406,29 @@ export class Textarea2 extends HTMLElement {
 
     const valueProp = Object.getOwnPropertyDescriptor(
       HTMLTextAreaElement.prototype,
-      "value",
+      "value"
     );
 
     Object.defineProperty(el, "value", {
       get() {
         return valueProp?.get?.call(el);
       },
-      set(value: string) {
+
+      /** @param {string} value */
+      set(value) {
         valueProp?.set?.call(el, value);
         onValueChange();
       },
+
       configurable: true,
       enumerable: true,
     });
   }
 
-  #createOrRecycleOutputElement(): HTMLDivElement {
-    let output = this.querySelector(".t2-output") as HTMLDivElement;
+  /** @returns {HTMLDivElement} */
+  #createOrRecycleOutputElement() {
+    /** @type {HTMLDivElement | null} */
+    let output = this.querySelector(".t2-output");
 
     if (!output) {
       output = document.createElement("div");

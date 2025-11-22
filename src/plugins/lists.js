@@ -1,4 +1,3 @@
-import { type T2Plugin, type T2PluginContext } from ".";
 import {
   continueList,
   continueListRules,
@@ -6,26 +5,33 @@ import {
   joinLines,
   mergeList,
   splitLines,
-  type ContinueListRule,
-} from "../lib/text";
-import { Textarea2 } from "../textarea2";
+} from "../lib/text.js";
+import { Textarea2 } from "../textarea2.js";
 
-export { type ContinueListRule } from "../lib/text";
+/** @import { T2PluginContext } from "./index.js" */
+
+// Re-create the internal type so it gets included in the dist bundle
+/** @typedef {import("../lib/text.js").ContinueListRule} ContinueListRule */
 
 export const defaultContinueListRules = continueListRules;
 
-export class ListsPlugin implements T2Plugin {
-  #unsubscribe: AbortController | undefined = undefined;
+export class ListsPlugin {
+  /** @type {AbortController | undefined} */
+  #unsubscribe = undefined;
 
-  #t2: Textarea2 | undefined = undefined;
+  /** @type {Textarea2 | undefined} */
+  #t2 = undefined;
 
-  #rules: ContinueListRule[];
+  /** @type {ContinueListRule[]} */
+  #rules;
 
+  /** @param {ContinueListRule[]} [rules] */
   constructor(rules = Object.values(defaultContinueListRules)) {
     this.#rules = rules;
   }
 
-  connected(context: T2PluginContext) {
+  /** @param {T2PluginContext} context */
+  connected(context) {
     this.#unsubscribe = new AbortController();
     this.#t2 = context.t2;
 
@@ -42,7 +48,8 @@ export class ListsPlugin implements T2Plugin {
     this.#unsubscribe?.abort();
   }
 
-  #keydown(event: KeyboardEvent): void {
+  /** @param {KeyboardEvent} event */
+  #keydown(event) {
     if (!this.#rules.length || event.key !== "Enter") return;
     event.preventDefault();
 
@@ -56,15 +63,16 @@ export class ListsPlugin implements T2Plugin {
       if (res.nextLine !== null) lines.splice(lineNr + 1, 0, res.nextLine);
       value(joinLines(lines));
 
-      if (res.didContinue) {
-        select({ to: "relative", delta: res.marker!.length + 1 });
+      if (res.didContinue && res.marker) {
+        select({ to: "relative", delta: res.marker.length + 1 });
       } else if (res.didEnd) {
         select({ to: "startOfLine", startOf: lineNr });
       } else select({ to: "relative", delta: 1 });
     });
   }
 
-  #paste(event: ClipboardEvent): void {
+  /** @param {ClipboardEvent} event */
+  #paste(event) {
     const payload = event.clipboardData?.getData("text/plain");
     if (!payload) return;
 

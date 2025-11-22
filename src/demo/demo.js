@@ -1,10 +1,12 @@
-import * as T2 from "../textarea2";
+import * as T2 from "../textarea2.js";
 
 T2.Textarea2.define();
 
-const textarea2 = document.querySelector("textarea-2") as T2.Textarea2;
+/** @type {T2.Textarea2 | null} */
+const textarea2 = document.querySelector("textarea-2");
 
-const completions: T2.AutoComplete[] = [
+/** @type {T2.AutoComplete[]} */
+const completions = [
   {
     trigger: "/",
     id: "slashcommand",
@@ -30,7 +32,7 @@ const completions: T2.AutoComplete[] = [
   },
 ];
 
-textarea2!.use(
+textarea2?.use(
   new T2.AutocompletePlugin(completions),
   new T2.TabsPlugin(),
   new T2.FlipLinesPlugin(),

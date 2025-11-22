@@ -1,7 +1,6 @@
 import { screen } from "@testing-library/dom";
 import { afterEach, beforeAll, describe, expect, test, vi } from "vitest";
 import { cleanup, render } from "./lib/test";
-import { type T2Plugin } from "./plugins";
 import { Textarea2 } from "./textarea2";
 
 describe("textarea2", () => {
@@ -289,7 +288,7 @@ describe("textarea2", () => {
   describe("plugin lifecycle", () => {
     test("runs plugin setup", () => {
       const { textarea2 } = render();
-      const plugin: T2Plugin = {
+      const plugin = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),
@@ -302,7 +301,7 @@ describe("textarea2", () => {
 
     test("runs plugin connected", () => {
       const { textarea2 } = render();
-      const plugin: T2Plugin = {
+      const plugin = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),
@@ -315,7 +314,7 @@ describe("textarea2", () => {
 
     test("runs plugin disconnected", () => {
       const { textarea2 } = render();
-      const plugin: T2Plugin = {
+      const plugin = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),
@@ -329,7 +328,7 @@ describe("textarea2", () => {
 
     test("does not run plugin connected on a disconnected component", () => {
       const { textarea2 } = render();
-      const plugin: T2Plugin = {
+      const plugin = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),
@@ -343,12 +342,12 @@ describe("textarea2", () => {
 
     test("adds multiple plugins", () => {
       const { textarea2 } = render();
-      const plugin1: T2Plugin = {
+      const plugin1 = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),
       };
-      const plugin2: T2Plugin = {
+      const plugin2 = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),
@@ -362,12 +361,12 @@ describe("textarea2", () => {
 
     test("allows chaining plugins", () => {
       const { textarea2 } = render();
-      const plugin1: T2Plugin = {
+      const plugin1 = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),
       };
-      const plugin2: T2Plugin = {
+      const plugin2 = {
         setup: vi.fn(),
         connected: vi.fn(),
         disconnected: vi.fn(),

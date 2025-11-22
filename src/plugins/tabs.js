@@ -1,12 +1,18 @@
-import { type T2Plugin, type T2PluginContext } from ".";
-import { indent, type IndentMode, joinLines, splitLines } from "../lib/text";
-import { Textarea2 } from "../textarea2";
+import { indent, joinLines, splitLines } from "../lib/text.js";
+import { Textarea2 } from "../textarea2.js";
 
-export class TabsPlugin implements T2Plugin {
-  #unsubscribe: AbortController | undefined = undefined;
-  #t2: Textarea2 | undefined = undefined;
+/** @import { IndentMode }  from "../lib/text.js" */
+/** @import { T2PluginContext } from "./index.js" */
 
-  connected(context: T2PluginContext) {
+export class TabsPlugin {
+  /** @type {AbortController | undefined} */
+  #unsubscribe = undefined;
+
+  /** @type {Textarea2 | undefined} */
+  #t2 = undefined;
+
+  /** @param {T2PluginContext} context */
+  connected(context) {
     this.#unsubscribe = new AbortController();
     this.#t2 = context.t2;
 
@@ -19,11 +25,13 @@ export class TabsPlugin implements T2Plugin {
     this.#unsubscribe?.abort();
   }
 
-  #keydown(event: KeyboardEvent): void {
+  /** @param {KeyboardEvent} event */
+  #keydown(event) {
     if (event.key !== "Tab") return;
     event.preventDefault();
 
-    const mode: IndentMode = event.shiftKey ? "outdent" : "indent";
+    /** @type {IndentMode} */
+    const mode = event.shiftKey ? "outdent" : "indent";
 
     this.#t2?.act(({ select, selectedLines, value }) => {
       const newLines = splitLines(value());

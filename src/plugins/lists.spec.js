@@ -3,9 +3,9 @@ import { afterEach, beforeAll, describe, expect, test, vi } from "vitest";
 import { cleanup, render as baseRender } from "../lib/test";
 import { Textarea2 } from "../textarea2";
 import { ListsPlugin } from "./lists";
-import { ContinueListRule } from "../lib/text";
 
-function render(customRules?: ContinueListRule[]) {
+/** @param {import("../lib/text").ContinueListRule[]} [customRules]  */
+function render(customRules) {
   const result = baseRender();
   result.textarea2.use(new ListsPlugin(customRules));
   return result;
