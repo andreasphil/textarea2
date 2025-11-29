@@ -1,7 +1,7 @@
 import { replaceRange, splitAt } from "../lib/text.js";
-import { Textarea2 } from "../textarea2.js";
 
 /** @import { T2PluginContext } from "./index.js" */
+/** @import { Textarea2 } from "../textarea2.js" */
 
 /**
  * @typedef {object} AutoComplete
@@ -175,7 +175,7 @@ export class AutocompletePlugin {
         value(),
         this.#activeAc.start,
         selectionEnd() + 1,
-        result
+        result,
       );
 
       value(next);
@@ -239,7 +239,8 @@ export class AutocompletePlugin {
   /** @param {boolean} visible */
   #toggleMenu(visible) {
     try {
-      visible ? this.#menu.showPopover() : this.#menu.hidePopover();
+      if (visible) this.#menu.showPopover();
+      else this.#menu.hidePopover();
     } catch {
     } finally {
       if (visible) this.#menu.dataset.popoverOpen = "true";

@@ -6,9 +6,9 @@ import {
   mergeList,
   splitLines,
 } from "../lib/text.js";
-import { Textarea2 } from "../textarea2.js";
 
 /** @import { T2PluginContext } from "./index.js" */
+/** @import { Textarea2 } from "../textarea2.js" */
 
 // Re-create the internal type so it gets included in the dist bundle
 /** @typedef {import("../lib/text.js").ContinueListRule} ContinueListRule */

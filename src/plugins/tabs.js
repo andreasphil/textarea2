@@ -1,8 +1,8 @@
 import { indent, joinLines, splitLines } from "../lib/text.js";
-import { Textarea2 } from "../textarea2.js";
 
 /** @import { IndentMode }  from "../lib/text.js" */
 /** @import { T2PluginContext } from "./index.js" */
+/** @import { Textarea2 } from "../textarea2.js" */
 
 export class TabsPlugin {
   /** @type {AbortController | undefined} */

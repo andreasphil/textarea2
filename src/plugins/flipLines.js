@@ -1,7 +1,7 @@
 import { flipLines, joinLines, splitLines } from "../lib/text.js";
-import { Textarea2 } from "../textarea2.js";
 
 /** @import { T2PluginContext } from "./index.js" */
+/** @import { Textarea2 } from "../textarea2.js" */
 
 export class FlipLinesPlugin {
   /** @type {AbortController | undefined} */
