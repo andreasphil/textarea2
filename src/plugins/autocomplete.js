@@ -104,8 +104,12 @@ export class AutocompletePlugin {
       "Shift",
     ];
 
+    const ignoreTriggerKeys = [
+      "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"
+    ]
+
     // No autocomplete context existing yet -> check if we need to create one
-    if (!this.#activeAc && !["ArrowUp", "ArrowDown"].includes(event.key)) {
+    if (!this.#activeAc && !ignoreTriggerKeys.includes(event.key)) {
       this.#t2?.act(({ selectionStart, selectionEnd, value }) => {
         const cursor = selectionStart();
         if (cursor !== selectionEnd()) return;
