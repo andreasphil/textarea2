@@ -272,7 +272,7 @@ export class AutocompletePlugin {
         const li = document.createElement("li");
 
         const button = document.createElement("button");
-        if (state.focusedIndex === i) button.setAttribute("active", "true");
+        if (state.focusedIndex === i) button.setAttribute("aria-pressed", "true");
         button.addEventListener("click", () => {
           this.#execAutocomplete(command);
         });
