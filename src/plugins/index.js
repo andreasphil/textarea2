@@ -1,4 +1,4 @@
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 
 /**
  * @typedef {object} T2PluginContext
@@ -8,9 +8,9 @@
 
 /**
  * @typedef {object} T2Plugin
- * @property {(() => void)} [setup]
+ * @property {() => void} [setup]
  * @property {(context: T2PluginContext) => void} connected
- * @property {(() => void)} [disconnected]
+ * @property {() => void} [disconnected]
  */
 
 export * from "./autocomplete.js";

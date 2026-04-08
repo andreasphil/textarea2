@@ -37,5 +37,5 @@ textarea2?.use(
   new T2.TabsPlugin(),
   new T2.FlipLinesPlugin(),
   new T2.FullLineEditsPlugin(),
-  new T2.ListsPlugin()
+  new T2.ListsPlugin(),
 );

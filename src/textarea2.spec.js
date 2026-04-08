@@ -24,9 +24,7 @@ describe("textarea2", () => {
     });
 
     test("initially renders the output", () => {
-      const { output } = render(
-        `<textarea-2><textarea>Test</textarea></textarea-2>`
-      );
+      const { output } = render(`<textarea-2><textarea>Test</textarea></textarea-2>`);
 
       expect(output).toHaveTextContent("Test");
     });
@@ -251,7 +249,7 @@ describe("textarea2", () => {
       expect(handler).toHaveBeenCalledWith(
         expect.objectContaining({
           target: textarea,
-        })
+        }),
       );
     });
 
@@ -267,7 +265,7 @@ describe("textarea2", () => {
       expect(handler).toHaveBeenCalledWith(
         expect.objectContaining({
           target: textarea,
-        })
+        }),
       );
     });
 

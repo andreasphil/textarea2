@@ -115,21 +115,15 @@ describe("text", () => {
 
   describe("replaceRange", () => {
     test("replaces a range in the middle", () => {
-      expect(replaceRange("one two three", 4, 8, "four")).toEqual(
-        "one four three"
-      );
+      expect(replaceRange("one two three", 4, 8, "four")).toEqual("one four three");
     });
 
     test("replaces a range at the start", () => {
-      expect(replaceRange("one two three", 0, 4, "four")).toEqual(
-        "four two three"
-      );
+      expect(replaceRange("one two three", 0, 4, "four")).toEqual("four two three");
     });
 
     test("replaces a range at the end", () => {
-      expect(replaceRange("one two three", 8, 14, "four")).toEqual(
-        "one two four"
-      );
+      expect(replaceRange("one two three", 8, 14, "four")).toEqual("one two four");
     });
 
     test("doesn't crash if the input is empty", () => {
@@ -137,21 +131,15 @@ describe("text", () => {
     });
 
     test("doesn't crash if the start index is out of bounds", () => {
-      expect(replaceRange("one two three", -5, 8, "four")).toEqual(
-        "four three"
-      );
+      expect(replaceRange("one two three", -5, 8, "four")).toEqual("four three");
     });
 
     test("doesn't crash if the end index is out of bounds", () => {
-      expect(replaceRange("one two three", 8, 99, "four")).toEqual(
-        "one two four"
-      );
+      expect(replaceRange("one two three", 8, 99, "four")).toEqual("one two four");
     });
 
     test("inserts a string if from and to are identical", () => {
-      expect(replaceRange("one two three", 4, 5, "four ")).toEqual(
-        "one four two three"
-      );
+      expect(replaceRange("one two three", 4, 5, "four ")).toEqual("one four two three");
     });
   });
 

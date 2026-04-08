@@ -15,7 +15,7 @@ const exampleCompletions = [
   },
 ];
 
-/** @param {import("./autocomplete").AutoComplete[]} [completions]  */
+/** @param {import("./autocomplete").AutoComplete[]} [completions] */
 function render(completions = exampleCompletions) {
   const result = baseRender();
   result.textarea2.use(new AutocompletePlugin(completions));
@@ -24,12 +24,12 @@ function render(completions = exampleCompletions) {
 
 // Workaround while JSOM has no support for :popover-open selector
 
-/** @param {Element} el  */
+/** @param {Element} el */
 function expectToBeVisible(el) {
   expect(el).toHaveAttribute("data-popover-open", "true");
 }
 
-/** @param {Element} el  */
+/** @param {Element} el */
 function expectNotToBeVisible(el) {
   expect(el).not.toHaveAttribute("data-popover-open");
 }
@@ -325,9 +325,7 @@ describe("autocomplete", () => {
   test("resolves dynamic commands", async () => {
     const commands = vi
       .fn()
-      .mockReturnValue([
-        { id: "1", name: "Dynamic", value: "Foo", initial: true },
-      ]);
+      .mockReturnValue([{ id: "1", name: "Dynamic", value: "Foo", initial: true }]);
     const { user } = render([{ id: "0", trigger: "/", commands }]);
 
     const textbox = screen.getByRole("textbox");

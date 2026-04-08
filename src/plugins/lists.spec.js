@@ -4,7 +4,7 @@ import { cleanup, render as baseRender } from "../lib/test";
 import { Textarea2 } from "../textarea2";
 import { ListsPlugin } from "./lists";
 
-/** @param {import("../lib/text").ContinueListRule[]} [customRules]  */
+/** @param {import("../lib/text").ContinueListRule[]} [customRules] */
 function render(customRules) {
   const result = baseRender();
   result.textarea2.use(new ListsPlugin(customRules));

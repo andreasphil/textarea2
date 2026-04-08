@@ -119,11 +119,9 @@ describe("full line edits", () => {
       const { textarea, user } = render();
       textarea.value = "a\nb\nc";
 
-      await user.type(
-        screen.getByRole("textbox"),
-        "{meta>}{shift>}k{/meta}{/shift}",
-        { initialSelectionStart: 3 }
-      );
+      await user.type(screen.getByRole("textbox"), "{meta>}{shift>}k{/meta}{/shift}", {
+        initialSelectionStart: 3,
+      });
 
       textarea.value = "a\nc";
       expect(textarea.selectionStart).toBe(3);
@@ -133,10 +131,7 @@ describe("full line edits", () => {
       const { textarea, user } = render();
       textarea.value = "";
 
-      await user.type(
-        screen.getByRole("textbox"),
-        "{meta>}{shift>}k{/meta}{/shift}"
-      );
+      await user.type(screen.getByRole("textbox"), "{meta>}{shift>}k{/meta}{/shift}");
 
       expect(textarea).toHaveValue("");
     });
@@ -145,11 +140,10 @@ describe("full line edits", () => {
       const { textarea, user } = render();
       textarea.value = "a\nb\nc";
 
-      await user.type(
-        screen.getByRole("textbox"),
-        "{meta>}{shift>}k{/meta}{/shift}",
-        { initialSelectionStart: 2, initialSelectionEnd: 3 }
-      );
+      await user.type(screen.getByRole("textbox"), "{meta>}{shift>}k{/meta}{/shift}", {
+        initialSelectionStart: 2,
+        initialSelectionEnd: 3,
+      });
 
       expect(textarea).toHaveValue("a\nk\nc");
     });
@@ -160,11 +154,9 @@ describe("full line edits", () => {
       const { textarea, user } = render();
       textarea.value = "a\nb\nc";
 
-      await user.type(
-        screen.getByRole("textbox"),
-        "{meta>}{shift>}d{/meta}{/shift}",
-        { initialSelectionStart: 1 }
-      );
+      await user.type(screen.getByRole("textbox"), "{meta>}{shift>}d{/meta}{/shift}", {
+        initialSelectionStart: 1,
+      });
 
       expect(textarea).toHaveValue("a\na\nb\nc");
       expect(textarea.selectionStart).toBe(3);
@@ -174,11 +166,10 @@ describe("full line edits", () => {
       const { textarea, user } = render();
       textarea.value = "a\nb\nc";
 
-      await user.type(
-        screen.getByRole("textbox"),
-        "{meta>}{shift>}d{/meta}{/shift}",
-        { initialSelectionStart: 2, initialSelectionEnd: 3 }
-      );
+      await user.type(screen.getByRole("textbox"), "{meta>}{shift>}d{/meta}{/shift}", {
+        initialSelectionStart: 2,
+        initialSelectionEnd: 3,
+      });
 
       expect(textarea).toHaveValue("a\nd\nc");
     });

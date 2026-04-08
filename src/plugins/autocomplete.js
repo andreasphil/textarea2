@@ -1,33 +1,30 @@
 import { replaceRange, splitAt } from "../lib/text.js";
 
-/** @import { T2PluginContext } from "./index.js" */
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {T2PluginContext} from "./index.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 
 /**
  * @typedef {object} AutoComplete
  * @property {string} id The unique identifier of the autocomplete mode.
- * @property {string} trigger Character that triggers the autocomplete when
- *  the user types it. Note that this MUST have a `length` of exactly 1.
- * @property {AutoCompleteCommand[] | (() => AutoCompleteCommand[])} commands
- *  Commands associated with this autocomplete mode.
+ * @property {string} trigger Character that triggers the autocomplete when the user types it. Note
+ *   that this MUST have a `length` of exactly 1.
+ * @property {AutoCompleteCommand[] | (() => AutoCompleteCommand[])} commands Commands associated
+ *   with this autocomplete mode.
  */
 
 /**
  * @typedef {object} AutoCompleteCommand
  * @property {string} id The unique identifier of the command. Can be any string.
  * @property {string} name The visible name of the command.
- * @property {string | Element} [icon] Icon of the command. Should be a string
- *  (which will be inserted as text content) or an HTML element (which will be
- *  inserted as-is).
- * @property {string | (() => string | undefined)} value Value of the command.
- *  If the value is a string or returns a string, the autocomplete sequence will
- *  be replaced by that string. If the value is undefined or returns undefined,
- *  the autocomplete sequence will be removed. This can still be useful if you
- *  want to run some functionality without inserting any text.
- * @property {boolean} [initial] If set to true, the command will be shown by
- *  default when the menu is opened, but no query has been entered yet. You can
- *  use this to display an initial list of items immediately when the trigger
- *  char is typed.
+ * @property {string | Element} [icon] Icon of the command. Should be a string (which will be
+ *   inserted as text content) or an HTML element (which will be inserted as-is).
+ * @property {string | (() => string | undefined)} value Value of the command. If the value is a
+ *   string or returns a string, the autocomplete sequence will be replaced by that string. If the
+ *   value is undefined or returns undefined, the autocomplete sequence will be removed. This can
+ *   still be useful if you want to run some functionality without inserting any text.
+ * @property {boolean} [initial] If set to true, the command will be shown by default when the menu
+ *   is opened, but no query has been entered yet. You can use this to display an initial list of
+ *   items immediately when the trigger char is typed.
  */
 
 export class AutocompletePlugin {
@@ -94,19 +91,9 @@ export class AutocompletePlugin {
 
   /** @param {KeyboardEvent} event */
   #keyup(event) {
-    const allowedKeys = [
-      "Alt",
-      "ArrowDown",
-      "ArrowUp",
-      "Backspace",
-      "Control",
-      "Meta",
-      "Shift",
-    ];
+    const allowedKeys = ["Alt", "ArrowDown", "ArrowUp", "Backspace", "Control", "Meta", "Shift"];
 
-    const ignoreTriggerKeys = [
-      "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"
-    ]
+    const ignoreTriggerKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 
     // No autocomplete context existing yet -> check if we need to create one
     if (!this.#activeAc && !ignoreTriggerKeys.includes(event.key)) {
@@ -175,12 +162,7 @@ export class AutocompletePlugin {
     this.#t2?.act(({ value, selectionEnd, select }) => {
       if (!this.#activeAc) return;
 
-      const next = replaceRange(
-        value(),
-        this.#activeAc.start,
-        selectionEnd() + 1,
-        result,
-      );
+      const next = replaceRange(value(), this.#activeAc.start, selectionEnd() + 1, result);
 
       value(next);
 
@@ -208,7 +190,7 @@ export class AutocompletePlugin {
     return menu;
   }
 
-  /** @returns {Promise<{x: string, y: string}>} */
+  /** @returns {Promise<{ x: string; y: string }>} */
   async #determineMenuPosition() {
     return new Promise((resolve) => {
       this.#t2?.act(({ value, selectionStart }) => {

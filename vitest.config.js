@@ -5,5 +5,5 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: { environment: "jsdom", setupFiles: ["./vitest.setup.js"] },
-  })
+  }),
 );

@@ -1,8 +1,8 @@
 import { createPlaintextRender } from "./lib/render.js";
 import * as Text from "./lib/text.js";
 
-/** @import { T2RenderFn } from "./lib/render.js" */
-/** @import { T2Plugin } from "./plugins/index.js" */
+/** @import {T2RenderFn} from "./lib/render.js" */
+/** @import {T2Plugin} from "./plugins/index.js" */
 
 /**
  * @typedef {object} T2Context
@@ -50,7 +50,11 @@ import * as Text from "./lib/text.js";
  */
 
 /**
- * @typedef {T2SelectionAbsolute | T2SelectionRelative | T2SelectionStartOfLine | T2SelectionEndOfLine | T2SelectionLines} T2Selection
+ * @typedef {T2SelectionAbsolute
+ *   | T2SelectionRelative
+ *   | T2SelectionStartOfLine
+ *   | T2SelectionEndOfLine
+ *   | T2SelectionLines} T2Selection
  */
 
 export * from "./plugins/index.js";
@@ -220,7 +224,7 @@ export class Textarea2 extends HTMLElement {
 
   /**
    * @param {...T2Plugin} plugins
-   * @returns {{use: (...plugins: T2Plugin[]) => any}}
+   * @returns {{ use: (...plugins: T2Plugin[]) => any }}
    */
   use(...plugins) {
     plugins.forEach((plugin) => {
@@ -315,10 +319,7 @@ export class Textarea2 extends HTMLElement {
 
     // Sets the selection to the start of the specified line
     else if (opts.to === "startOfLine") {
-      const [start] = Text.extendSelectionToFullLines(
-        this.#value,
-        opts.startOf
-      );
+      const [start] = Text.extendSelectionToFullLines(this.#value, opts.startOf);
       this.#textarea.setSelectionRange(start, start);
     }
 
@@ -373,11 +374,7 @@ export class Textarea2 extends HTMLElement {
   }
 
   get #seletedLines() {
-    return Text.getSelectedLines(
-      this.#value,
-      this.#selectionStart,
-      this.#selectionEnd
-    );
+    return Text.getSelectedLines(this.#value, this.#selectionStart, this.#selectionEnd);
   }
 
   get #value() {
@@ -404,10 +401,7 @@ export class Textarea2 extends HTMLElement {
       onValueChange();
     });
 
-    const valueProp = Object.getOwnPropertyDescriptor(
-      HTMLTextAreaElement.prototype,
-      "value"
-    );
+    const valueProp = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value");
 
     Object.defineProperty(el, "value", {
       get() {

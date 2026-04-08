@@ -2,13 +2,13 @@
   "name": "@andreasphil/textarea2",
   "version": "0.7.0",
   "description": "A better plain-text input component",
-  "author": "Andreas Philippi",
   "license": "MIT",
-  "type": "module",
+  "author": "Andreas Philippi",
   "repository": "https://github.com/andreasphil/textarea2",
   "files": [
     "dist"
   ],
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/textarea2.js",
