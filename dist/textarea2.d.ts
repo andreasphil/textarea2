@@ -2,7 +2,7 @@ export * from "./plugins/index.js";
 export class Textarea2 extends HTMLElement {
     static define(tag?: string): void;
     static get observedAttributes(): never[];
-    static get "__#private@#style"(): string;
+    static get #style(): string;
     connectedCallback(): void;
     disconnectedCallback(): void;
     attributeChangedCallback(): void;
