@@ -23,7 +23,7 @@ import { Textarea2 } from "https://esm.sh/gh/andreasphil/textarea2@<tag>";
 With a package manager:
 
 ```sh
-npm i github:andreasphil/textarea2#<tag>
+pnpm i github:andreasphil/textarea2#<tag>
 ```
 
 ## Usage

@@ -20,7 +20,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "node --run build:bundle && node --run build:types",
-    "build:types": "tsc -p tsconfig.lib.json",
+    "build:types": "tsc",
     "build:bundle": "vite build",
     "preversion": "node --run test && node --run build && git add dist/",
     "typecheck": "tsc --noEmit"

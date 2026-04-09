@@ -5,8 +5,13 @@ export default defineConfig({
     lib: {
       entry: "./src/textarea2.js",
       formats: ["es"],
+      fileName: (_, entryname) => `${entryname}.js`,
     },
     minify: false,
     target: "esnext",
+  },
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./test-setup.js"],
   },
 });
