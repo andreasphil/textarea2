@@ -52,9 +52,9 @@ function flipLines(a, b) {
 	return [b, a];
 }
 /**
-* Replaces the character range in the specified string with the new value.
-* Similarly to `String.prototype.substring`, characters are replaced from
-* (and including) `from`, up to (but not including) `end`.
+* Replaces the character range in the specified string with the new value. Similarly to
+* `String.prototype.substring`, characters are replaced from (and including) `from`, up to (but not
+* including) `end`.
 *
 * @param {string} text
 * @param {number} from
@@ -106,8 +106,8 @@ function extendSelectionToFullLines(text, from, to = from) {
 	return [start, end];
 }
 /**
-* For a cursor (e.g. selectionStart in a textarea) in a value, returns the
-* position of the cursor relative to the line it is in.
+* For a cursor (e.g. selectionStart in a textarea) in a value, returns the position of the cursor
+* relative to the line it is in.
 *
 * @param {string} text
 * @param {number} cursor
@@ -150,10 +150,10 @@ var continueListRules = {
 	}
 };
 /**
-* Given a line and a list of rules, checks if the line is a list as defined by
-* one of the rules. If so, it continues the list on the next line, otherwise
-* an empty next line is returned. If a cursor is given, the line is split at
-* the cursor and the continuation text is inserted between the two parts.
+* Given a line and a list of rules, checks if the line is a list as defined by one of the rules. If
+* so, it continues the list on the next line, otherwise an empty next line is returned. If a cursor
+* is given, the line is split at the cursor and the continuation text is inserted between the two
+* parts.
 *
 * @param {string} line
 * @param {ContinueListRule[]} rules
@@ -192,11 +192,10 @@ function continueList(line, rules, cursor = line.length) {
 * @property {string} marker
 */
 /**
-* Given some already existing line, a string of text that should be inserted
-* in that line, and a list of rules for continuing lists, this function checks
-* if: 1) the existing line is a list; and 2) the new text is also a list. If
-* both are true, both will be consolidated in order to avoid duplicate list
-* markers.
+* Given some already existing line, a string of text that should be inserted in that line, and a
+* list of rules for continuing lists, this function checks if: 1) the existing line is a list; and
+* 2) the new text is also a list. If both are true, both will be consolidated in order to avoid
+* duplicate list markers.
 *
 * @param {string} line
 * @param {string} insert
@@ -257,32 +256,29 @@ function createPlaintextRender() {
 }
 //#endregion
 //#region src/plugins/autocomplete.js
-/** @import { T2PluginContext } from "./index.js" */
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {T2PluginContext} from "./index.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 /**
 * @typedef {object} AutoComplete
 * @property {string} id The unique identifier of the autocomplete mode.
-* @property {string} trigger Character that triggers the autocomplete when
-*  the user types it. Note that this MUST have a `length` of exactly 1.
-* @property {AutoCompleteCommand[] | (() => AutoCompleteCommand[])} commands
-*  Commands associated with this autocomplete mode.
+* @property {string} trigger Character that triggers the autocomplete when the user types it. Note
+*   that this MUST have a `length` of exactly 1.
+* @property {AutoCompleteCommand[] | (() => AutoCompleteCommand[])} commands Commands associated
+*   with this autocomplete mode.
 */
 /**
 * @typedef {object} AutoCompleteCommand
 * @property {string} id The unique identifier of the command. Can be any string.
 * @property {string} name The visible name of the command.
-* @property {string | Element} [icon] Icon of the command. Should be a string
-*  (which will be inserted as text content) or an HTML element (which will be
-*  inserted as-is).
-* @property {string | (() => string | undefined)} value Value of the command.
-*  If the value is a string or returns a string, the autocomplete sequence will
-*  be replaced by that string. If the value is undefined or returns undefined,
-*  the autocomplete sequence will be removed. This can still be useful if you
-*  want to run some functionality without inserting any text.
-* @property {boolean} [initial] If set to true, the command will be shown by
-*  default when the menu is opened, but no query has been entered yet. You can
-*  use this to display an initial list of items immediately when the trigger
-*  char is typed.
+* @property {string | Element} [icon] Icon of the command. Should be a string (which will be
+*   inserted as text content) or an HTML element (which will be inserted as-is).
+* @property {string | (() => string | undefined)} value Value of the command. If the value is a
+*   string or returns a string, the autocomplete sequence will be replaced by that string. If the
+*   value is undefined or returns undefined, the autocomplete sequence will be removed. This can
+*   still be useful if you want to run some functionality without inserting any text.
+* @property {boolean} [initial] If set to true, the command will be shown by default when the menu
+*   is opened, but no query has been entered yet. You can use this to display an initial list of
+*   items immediately when the trigger char is typed.
 */
 var AutocompletePlugin = class {
 	/** @type {AbortController | undefined} */
@@ -406,7 +402,7 @@ var AutocompletePlugin = class {
 		menu.classList.add("t2-autocomplete");
 		return menu;
 	}
-	/** @returns {Promise<{x: string, y: string}>} */
+	/** @returns {Promise<{ x: string; y: string }>} */
 	async #determineMenuPosition() {
 		return new Promise((resolve) => {
 			this.#t2?.act(({ value, selectionStart }) => {
@@ -455,6 +451,7 @@ var AutocompletePlugin = class {
 		}
 		state.filteredCommands.map((command, i) => {
 			const li = document.createElement("li");
+			li.setAttribute("role", "menuitem");
 			const button = document.createElement("button");
 			if (state.focusedIndex === i) button.setAttribute("aria-pressed", "true");
 			button.addEventListener("click", () => {
@@ -547,8 +544,8 @@ var ActiveAc = class {
 };
 //#endregion
 //#region src/plugins/flipLines.js
-/** @import { T2PluginContext } from "./index.js" */
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {T2PluginContext} from "./index.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 var FlipLinesPlugin = class {
 	/** @type {AbortController | undefined} */
 	#unsubscribe = void 0;
@@ -591,8 +588,8 @@ var FlipLinesPlugin = class {
 };
 //#endregion
 //#region src/plugins/fullLineEdits.js
-/** @import { T2PluginContext } from "./index.js" */
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {T2PluginContext} from "./index.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 var FullLineEditsPlugin = class {
 	/** @type {AbortController | undefined} */
 	#unsubscribe = void 0;
@@ -643,8 +640,8 @@ var FullLineEditsPlugin = class {
 };
 //#endregion
 //#region src/plugins/lists.js
-/** @import { T2PluginContext } from "./index.js" */
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {T2PluginContext} from "./index.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 /** @typedef {import("../lib/text.js").ContinueListRule} ContinueListRule */
 var defaultContinueListRules = continueListRules;
 var ListsPlugin = class {
@@ -717,9 +714,9 @@ var ListsPlugin = class {
 };
 //#endregion
 //#region src/plugins/tabs.js
-/** @import { IndentMode }  from "../lib/text.js" */
-/** @import { T2PluginContext } from "./index.js" */
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {IndentMode} from "../lib/text.js" */
+/** @import {T2PluginContext} from "./index.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 var TabsPlugin = class {
 	/** @type {AbortController | undefined} */
 	#unsubscribe = void 0;
@@ -855,7 +852,8 @@ var Textarea2 = class Textarea2 extends HTMLElement {
 		this.#observeValueChanges(textarea);
 		this.#savedValue = textarea.value;
 		this.#textarea = textarea;
-		this.#output = this.#createOrRecycleOutputElement();
+		const output = this.#createOrRecycleOutputElement();
+		this.#output = output;
 		const node = document.createElement("style");
 		node.innerHTML = Textarea2.#style;
 		this.insertBefore(node, textarea);
@@ -890,7 +888,7 @@ var Textarea2 = class Textarea2 extends HTMLElement {
 	}
 	/**
 	* @param {...T2Plugin} plugins
-	* @returns {{use: (...plugins: T2Plugin[]) => any}}
+	* @returns {{ use: (...plugins: T2Plugin[]) => any }}
 	*/
 	use(...plugins) {
 		plugins.forEach((plugin) => {
@@ -1024,6 +1022,7 @@ var Textarea2 = class Textarea2 extends HTMLElement {
 			get() {
 				return valueProp?.get?.call(el);
 			},
+			/** @param {string} value */
 			set(value) {
 				valueProp?.set?.call(el, value);
 				onValueChange();

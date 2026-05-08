@@ -10,7 +10,7 @@ export class Textarea2 extends HTMLElement {
     setRender(factory: () => T2RenderFn): void;
     /**
      * @param {...T2Plugin} plugins
-     * @returns {{use: (...plugins: T2Plugin[]) => any}}
+     * @returns {{ use: (...plugins: T2Plugin[]) => any }}
      */
     use(...plugins: T2Plugin[]): {
         use: (...plugins: T2Plugin[]) => any;

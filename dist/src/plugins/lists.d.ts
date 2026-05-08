@@ -1,5 +1,5 @@
-/** @import { T2PluginContext } from "./index.js" */
-/** @import { Textarea2 } from "../textarea2.js" */
+/** @import {T2PluginContext} from "./index.js" */
+/** @import {Textarea2} from "../textarea2.js" */
 /** @typedef {import("../lib/text.js").ContinueListRule} ContinueListRule */
 export const defaultContinueListRules: Record<string, import("../lib/text.js").ContinueListRule>;
 export class ListsPlugin {

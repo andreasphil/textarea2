@@ -33,9 +33,9 @@ export function duplicateLine(text: string, index: number): string;
  */
 export function flipLines(a: string, b: string): [string, string];
 /**
- * Replaces the character range in the specified string with the new value.
- * Similarly to `String.prototype.substring`, characters are replaced from
- * (and including) `from`, up to (but not including) `end`.
+ * Replaces the character range in the specified string with the new value. Similarly to
+ * `String.prototype.substring`, characters are replaced from (and including) `from`, up to (but not
+ * including) `end`.
  *
  * @param {string} text
  * @param {number} from
@@ -59,8 +59,8 @@ export function getSelectedLines(text: string, from: number, to?: number): [numb
  */
 export function extendSelectionToFullLines(text: string, from: number, to?: number): [number, number];
 /**
- * For a cursor (e.g. selectionStart in a textarea) in a value, returns the
- * position of the cursor relative to the line it is in.
+ * For a cursor (e.g. selectionStart in a textarea) in a value, returns the position of the cursor
+ * relative to the line it is in.
  *
  * @param {string} text
  * @param {number} cursor
@@ -68,10 +68,10 @@ export function extendSelectionToFullLines(text: string, from: number, to?: numb
  */
 export function getCursorInLine(text: string, cursor: number): number | undefined;
 /**
- * Given a line and a list of rules, checks if the line is a list as defined by
- * one of the rules. If so, it continues the list on the next line, otherwise
- * an empty next line is returned. If a cursor is given, the line is split at
- * the cursor and the continuation text is inserted between the two parts.
+ * Given a line and a list of rules, checks if the line is a list as defined by one of the rules. If
+ * so, it continues the list on the next line, otherwise an empty next line is returned. If a cursor
+ * is given, the line is split at the cursor and the continuation text is inserted between the two
+ * parts.
  *
  * @param {string} line
  * @param {ContinueListRule[]} rules
@@ -85,11 +85,10 @@ export function continueList(line: string, rules: ContinueListRule[], cursor?: n
  * @property {string} marker
  */
 /**
- * Given some already existing line, a string of text that should be inserted
- * in that line, and a list of rules for continuing lists, this function checks
- * if: 1) the existing line is a list; and 2) the new text is also a list. If
- * both are true, both will be consolidated in order to avoid duplicate list
- * markers.
+ * Given some already existing line, a string of text that should be inserted in that line, and a
+ * list of rules for continuing lists, this function checks if: 1) the existing line is a list; and
+ * 2) the new text is also a list. If both are true, both will be consolidated in order to avoid
+ * duplicate list markers.
  *
  * @param {string} line
  * @param {string} insert
