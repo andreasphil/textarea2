@@ -252,6 +252,7 @@ export class AutocompletePlugin {
     state.filteredCommands
       .map((command, i) => {
         const li = document.createElement("li");
+        li.setAttribute("role", "menuitem");
 
         const button = document.createElement("button");
         if (state.focusedIndex === i) button.setAttribute("aria-pressed", "true");
