@@ -816,7 +816,7 @@ var Textarea2 = class Textarea2 extends HTMLElement {
             background: transparent;
           }
 
-          > * {
+          & > * {
             min-height: 1lh;
           }
         }
