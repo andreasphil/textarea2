@@ -12,7 +12,7 @@
   "exports": {
     ".": {
       "import": "./dist/textarea2.js",
-      "types": "./dist/textarea2.d.ts"
+      "types": "./dist/src/textarea2.d.ts"
     }
   },
   "scripts": {
